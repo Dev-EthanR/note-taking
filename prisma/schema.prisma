@@ -49,8 +49,10 @@ model User {
   emailVerified DateTime? @map("email_verified")
   password      String?
   image         String?
+  settings      Settings?
   accounts      Account[]
   sessions      Session[]
+  notes         Note[]
 
   @@map("users")
 }
@@ -62,4 +64,40 @@ model VerificationToken {
 
   @@unique([identifier, token])
   @@map("verification_tokens")
+}
+
+model Note {
+  id        String   @id @default(cuid())
+  title     String
+  content   String
+  tags      String[]
+  status    Status?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+}
+
+model Settings {
+  id     String @id @default(cuid())
+  theme  Theme  @default(System)
+  font   Font   @default(Sans)
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+enum Theme {
+  Light
+  Dark
+  System
+}
+
+enum Font {
+  Sans
+  Serif
+  Monospace
+}
+
+enum Status {
+  Archived
 }
