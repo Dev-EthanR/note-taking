@@ -19,6 +19,7 @@ import {
 } from "../ui/input-group";
 import Image from "next/image";
 import { useState } from "react";
+import { signIn } from "next-auth/react";
 
 export function LoginForm({
   className,
@@ -26,18 +27,21 @@ export function LoginForm({
 }: React.ComponentProps<"div">) {
   const [showPassword, setShowPassword] = useState(false);
 
+  const credentialsSignin = (formData: FormData) => {
+    signIn("credentials", Object.fromEntries(formData.entries()));
+  };
   return (
     <div
       className={cn("flex flex-col gap-6 items-center", className)}
       {...props}
     >
-      <Card className="px-4 py-12 md:px-12 w-85.75 md:w-135 h-154.75 dark:bg-neutral-950">
+      <Card className="px-4 md:px-12 w-85.75 md:w-135 h-154.75 dark:bg-neutral-950">
         <AuthCardHeader
           title="Welcome to Note"
           description="Please log in to continue"
         />
         <CardContent>
-          <form>
+          <form action={credentialsSignin}>
             <FieldGroup>
               <Field>
                 <FieldLabel htmlFor="email" className="dark:text-white">
@@ -46,6 +50,7 @@ export function LoginForm({
                 <Input
                   id="email"
                   type="email"
+                  name="email"
                   placeholder="email@example.com"
                   required
                   className="dark:border-neutral-600 dark:placeholder:text-neutral-500 dark:text-white"
@@ -67,6 +72,7 @@ export function LoginForm({
                   <InputGroupInput
                     id="password"
                     type={showPassword ? "text" : "password"}
+                    name="password"
                     required
                   />
                   <InputGroupAddon align="inline-end" className="pr-2">
