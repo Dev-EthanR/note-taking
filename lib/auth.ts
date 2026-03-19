@@ -2,10 +2,12 @@ import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import { prisma } from "./prisma";
 import bcrypt from "bcrypt";
-import { userSchema } from "@/utils/userSchema";
+import { signInSchema } from "@/utils/userSchema";
+import Google from "next-auth/providers/google";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
+    Google,
     Credentials({
       credentials: {
         email: {
@@ -22,7 +24,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       authorize: async (credentials) => {
         try {
           let user = null;
-          const { email, password } = await userSchema.parseAsync(credentials);
+          const { email, password } =
+            await signInSchema.parseAsync(credentials);
           if (!email) return null;
           user = await prisma.user.findUnique({
             where: {

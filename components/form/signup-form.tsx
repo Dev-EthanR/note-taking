@@ -8,32 +8,57 @@ import {
   FieldLabel,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import Link from "next/link";
-import AuthCardHeader from "./AuthCardHeader";
-import { useState } from "react";
+import { signUpSchema } from "@/utils/userSchema";
+import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
+import Link from "next/link";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 import {
   InputGroup,
-  InputGroupInput,
   InputGroupAddon,
   InputGroupButton,
+  InputGroupInput,
 } from "../ui/input-group";
+import AuthCardHeader from "./AuthCardHeader";
+import { register as signUp } from "./register";
+import { signIn } from "next-auth/react";
+
+type FormData = z.infer<typeof signUpSchema>;
 
 export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
   const [showPassword, setShowPassword] = useState(false);
+  const [serverError, setServerError] = useState<string | null>(null);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<FormData>({
+    resolver: zodResolver(signUpSchema),
+  });
+
+  const onSubmit = async (data: FormData) => {
+    const formData = new FormData();
+    formData.append("email", data.email);
+    formData.append("password", data.password);
+    const result = await signUp(formData);
+    if (result?.error) return setServerError(result.error);
+  };
 
   return (
     <div className="flex flex-col gap-6 items-center">
       <Card
         {...props}
-        className="px-4 py-12 md:px-12 w-85.75 md:w-135 h-154.75 dark:bg-neutral-950 "
+        className="px-4 py-6 md:px-12 w-85.75 md:w-135 h-154.75 dark:bg-neutral-950 "
       >
         <AuthCardHeader
           title="Create Your Account"
           description="Sign up to start organizing your notes and boost your productivity."
         />
         <CardContent>
-          <form>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <FieldGroup>
               <Field>
                 <FieldLabel htmlFor="email" className="dark:text-white">
@@ -42,10 +67,15 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
                 <Input
                   id="email"
                   type="email"
+                  {...register("email")}
                   placeholder="email@example.com"
-                  required
+                  aria-required
                   className="dark:border-neutral-600 dark:placeholder:text-neutral-500 dark:text-white "
                 />
+                {errors?.email && (
+                  <p className="text-red-600">{errors.email.message}</p>
+                )}
+                {serverError && <p className="text-red-600">{serverError}</p>}
               </Field>
               <Field>
                 <div className="flex items-center">
@@ -56,8 +86,9 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
                 <InputGroup>
                   <InputGroupInput
                     id="password"
+                    {...register("password")}
                     type={showPassword ? "text" : "password"}
-                    required
+                    aria-required
                   />
                   <InputGroupAddon align="inline-end" className="pr-2">
                     <InputGroupButton
@@ -73,6 +104,9 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
                     </InputGroupButton>
                   </InputGroupAddon>
                 </InputGroup>
+                {errors?.password && (
+                  <p className="text-accent-500">{errors.password.message}</p>
+                )}
                 <div className="flex items-center gap-2">
                   <Image
                     className="w-4 h-4 dark:invert-65"
@@ -93,6 +127,7 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
                     variant="primary"
                     size="xl"
                     className="mb-1.5"
+                    disabled={isSubmitting}
                   >
                     Sign up
                   </Button>{" "}
@@ -104,6 +139,9 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
                     type="button"
                     size="xl"
                     className="font-medium text-base gap-3 mb-1.5 hover:bg-neutral-50 dark:hover:bg-neutral-800"
+                    onClick={() =>
+                      signIn("google", { redirectTo: "/application" })
+                    }
                   >
                     <Image
                       className="dark:invert"

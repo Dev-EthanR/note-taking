@@ -20,6 +20,12 @@ import {
 import Image from "next/image";
 import { useState } from "react";
 import { signIn } from "next-auth/react";
+import { signInSchema, signUpSchema } from "@/utils/userSchema";
+import z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+
+type FormData = z.infer<typeof signInSchema>;
 
 export function LoginForm({
   className,
@@ -27,21 +33,31 @@ export function LoginForm({
 }: React.ComponentProps<"div">) {
   const [showPassword, setShowPassword] = useState(false);
 
-  const credentialsSignin = (formData: FormData) => {
-    signIn("credentials", Object.fromEntries(formData.entries()));
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<FormData>({
+    resolver: zodResolver(signInSchema),
+  });
+
+  const onSubmit = async (formData: FormData) => {
+    const email = formData.email;
+    const password = formData.password;
+    signIn("credentials", { email, password, redirectTo: "/" });
   };
   return (
     <div
       className={cn("flex flex-col gap-6 items-center", className)}
       {...props}
     >
-      <Card className="px-4 md:px-12 w-85.75 md:w-135 h-154.75 dark:bg-neutral-950">
+      <Card className="px-4 py-6 md:px-12 w-85.75 md:w-135 h-154.75 dark:bg-neutral-950">
         <AuthCardHeader
           title="Welcome to Note"
           description="Please log in to continue"
         />
         <CardContent>
-          <form action={credentialsSignin}>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <FieldGroup>
               <Field>
                 <FieldLabel htmlFor="email" className="dark:text-white">
@@ -50,11 +66,14 @@ export function LoginForm({
                 <Input
                   id="email"
                   type="email"
-                  name="email"
+                  {...register("email")}
                   placeholder="email@example.com"
-                  required
+                  aria-required
                   className="dark:border-neutral-600 dark:placeholder:text-neutral-500 dark:text-white"
                 />
+                {errors?.email && (
+                  <p className="text-red-600">{errors.email.message}</p>
+                )}
               </Field>
               <Field>
                 <div className="flex items-center">
@@ -72,8 +91,8 @@ export function LoginForm({
                   <InputGroupInput
                     id="password"
                     type={showPassword ? "text" : "password"}
-                    name="password"
-                    required
+                    {...register("password")}
+                    aria-required
                   />
                   <InputGroupAddon align="inline-end" className="pr-2">
                     <InputGroupButton
@@ -89,6 +108,9 @@ export function LoginForm({
                     </InputGroupButton>
                   </InputGroupAddon>
                 </InputGroup>
+                {errors?.password && (
+                  <p className="text-accent-500">{errors.password.message}</p>
+                )}
               </Field>
               <Field>
                 <Button
@@ -107,6 +129,9 @@ export function LoginForm({
                   type="button"
                   size="xl"
                   className="font-medium text-base gap-3 mb-1.5"
+                  onClick={() =>
+                    signIn("google", { redirectTo: "/application" })
+                  }
                 >
                   <Image
                     className="dark:invert"
