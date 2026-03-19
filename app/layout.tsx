@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import { Inter, Noto_Serif, Source_Code_Pro, Geist } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
+import { ThemeProvider } from "next-themes";
 
-const geist = Geist({subsets:['latin'],variable:'--font-sans'});
+const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 
 const inter = Inter({
   variable: "--font-inter",
@@ -21,8 +22,8 @@ const sourceCodePro = Source_Code_Pro({
 });
 
 export const metadata: Metadata = {
-  title: "Note taking App",
-  description: "note take",
+  title: "Note",
+  description: "note taking application",
 };
 
 export default function RootLayout({
@@ -33,9 +34,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={cn("font-sans", geist.variable)}>
       <body
-        className={`${inter.variable} ${notoSerif.variable} ${sourceCodePro.variable} antialiased`}
+        className={`${inter.variable} ${notoSerif.variable} ${sourceCodePro.variable} antialiased  `}
       >
-        {children}
+        <main className="dark:bg-neutral-700">{children}</main>
       </body>
     </html>
   );
