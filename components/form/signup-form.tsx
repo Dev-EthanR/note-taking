@@ -48,10 +48,10 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
   };
 
   return (
-    <div className="flex flex-col gap-6 items-center">
+    <div className="flex flex-col gap-6 items-center ">
       <Card
         {...props}
-        className="px-4 py-6 md:px-12 w-85.75 md:w-135 h-154.75 dark:bg-neutral-950 "
+        className="px-4 py-6 md:px-12 w-85.75 md:w-135 h-165.5 dark:bg-neutral-950 "
       >
         <AuthCardHeader
           title="Create Your Account"
@@ -73,9 +73,13 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
                   className="dark:border-neutral-600 dark:placeholder:text-neutral-500 dark:text-white "
                 />
                 {errors?.email && (
-                  <p className="text-red-600">{errors.email.message}</p>
+                  <p className="text-accent-500 text-xs">
+                    {errors.email.message}
+                  </p>
                 )}
-                {serverError && <p className="text-red-600">{serverError}</p>}
+                {serverError && (
+                  <p className="text-accent-500 text-xs">{serverError}</p>
+                )}
               </Field>
               <Field>
                 <div className="flex items-center">
@@ -105,7 +109,9 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
                   </InputGroupAddon>
                 </InputGroup>
                 {errors?.password && (
-                  <p className="text-accent-500">{errors.password.message}</p>
+                  <p className="text-accent-500 text-xs">
+                    {errors.password.message}
+                  </p>
                 )}
                 <div className="flex items-center gap-2">
                   <Image
@@ -139,9 +145,8 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
                     type="button"
                     size="xl"
                     className="font-medium text-base gap-3 mb-1.5 hover:bg-neutral-50 dark:hover:bg-neutral-800"
-                    onClick={() =>
-                      signIn("google", { redirectTo: "/application" })
-                    }
+                    disabled={isSubmitting}
+                    onClick={() => signIn("google", { redirectTo: "/" })}
                   >
                     <Image
                       className="dark:invert"

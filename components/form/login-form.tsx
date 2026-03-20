@@ -24,6 +24,7 @@ import { signInSchema, signUpSchema } from "@/utils/userSchema";
 import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
 
 type FormData = z.infer<typeof signInSchema>;
 
@@ -32,6 +33,7 @@ export function LoginForm({
   ...props
 }: React.ComponentProps<"div">) {
   const [showPassword, setShowPassword] = useState(false);
+  const [serverError, setServerError] = useState("");
 
   const {
     register,
@@ -44,14 +46,24 @@ export function LoginForm({
   const onSubmit = async (formData: FormData) => {
     const email = formData.email;
     const password = formData.password;
-    signIn("credentials", { email, password, redirectTo: "/" });
+    const result = await signIn("credentials", {
+      email,
+      password,
+      redirect: false,
+    });
+
+    if (result.error) {
+      setServerError("Invalid email or password");
+    } else {
+      useRouter().push("/");
+    }
   };
   return (
     <div
       className={cn("flex flex-col gap-6 items-center", className)}
       {...props}
     >
-      <Card className="px-4 py-6 md:px-12 w-85.75 md:w-135 h-154.75 dark:bg-neutral-950">
+      <Card className="px-4 py-6 md:px-12 w-85.75 md:w-135 h-165.5 dark:bg-neutral-950">
         <AuthCardHeader
           title="Welcome to Note"
           description="Please log in to continue"
@@ -72,7 +84,7 @@ export function LoginForm({
                   className="dark:border-neutral-600 dark:placeholder:text-neutral-500 dark:text-white"
                 />
                 {errors?.email && (
-                  <p className="text-red-600">{errors.email.message}</p>
+                  <p className="text-accent-500">{errors.email.message}</p>
                 )}
               </Field>
               <Field>
@@ -113,11 +125,15 @@ export function LoginForm({
                 )}
               </Field>
               <Field>
+                {serverError && (
+                  <p className="text-accent-500">{serverError}</p>
+                )}
                 <Button
                   type="submit"
                   variant="primary"
                   size="xl"
                   className="mb-1.5"
+                  disabled={isSubmitting}
                 >
                   Login
                 </Button>
@@ -129,9 +145,8 @@ export function LoginForm({
                   type="button"
                   size="xl"
                   className="font-medium text-base gap-3 mb-1.5"
-                  onClick={() =>
-                    signIn("google", { redirectTo: "/application" })
-                  }
+                  disabled={isSubmitting}
+                  onClick={() => signIn("google", { redirectTo: "/" })}
                 >
                   <Image
                     className="dark:invert"
