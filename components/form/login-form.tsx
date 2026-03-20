@@ -1,4 +1,5 @@
 "use client";
+// NOTE: REFACTOR
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import {
@@ -9,22 +10,22 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
+import { signInSchema } from "@/utils/userSchema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { signIn } from "next-auth/react";
+import Image from "next/image";
 import Link from "next/link";
-import AuthCardHeader from "./AuthCardHeader";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import z from "zod";
 import {
   InputGroup,
   InputGroupAddon,
   InputGroupButton,
   InputGroupInput,
 } from "../ui/input-group";
-import Image from "next/image";
-import { useState } from "react";
-import { signIn } from "next-auth/react";
-import { signInSchema, signUpSchema } from "@/utils/userSchema";
-import z from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { useRouter } from "next/navigation";
+import AuthCardHeader from "./AuthCardHeader";
 
 type FormData = z.infer<typeof signInSchema>;
 
