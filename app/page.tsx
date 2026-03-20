@@ -1,3 +1,4 @@
+import Navbar from "@/components/navbar/Navbar";
 import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
 
@@ -5,5 +6,5 @@ export default async function Home() {
   const session = await auth();
 
   if (!session) redirect("/login");
-  return <div>Home</div>;
+  return <div>home</div>;
 }

@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Inter, Noto_Serif, Source_Code_Pro, Geist } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
+import Navbar from "@/components/navbar/Navbar";
+import NavHeader from "@/components/navbar/NavHeader";
 
 const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -35,7 +37,11 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${notoSerif.variable} ${sourceCodePro.variable} antialiased  `}
       >
-        <main className="dark:bg-neutral-700">{children}</main>
+        <main className="dark:bg-neutral-700 font-sans lg:flex">
+          <NavHeader screen="mobile" />
+          <Navbar />
+          {children}
+        </main>
       </body>
     </html>
   );

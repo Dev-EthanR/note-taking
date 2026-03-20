@@ -147,3 +147,10 @@
     @apply font-sans;
   }
 }
+
+@layer components {
+  .filter-primary {
+    filter: brightness(0) saturate(100%) invert(43%) sepia(87%) saturate(5914%)
+      hue-rotate(225deg) brightness(103%) contrast(103%);
+  }
+}
