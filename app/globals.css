@@ -154,4 +154,7 @@
     filter: brightness(0) saturate(100%) invert(43%) sepia(87%) saturate(5914%)
       hue-rotate(225deg) brightness(103%) contrast(103%);
   }
+  .fill-to-height {
+    min-height: calc(100vh-var(--navheader-height));
+  }
 }
