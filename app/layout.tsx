@@ -4,6 +4,7 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import Navbar from "@/components/navbar/Navbar";
 import NavHeader from "@/components/navbar/NavHeader";
+import TopBar from "@/components/navbar/TopBar";
 
 const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -40,7 +41,10 @@ export default function RootLayout({
         <main className="dark:bg-neutral-700 font-sans lg:flex">
           <NavHeader screen="mobile" />
           <Navbar />
-          {children}
+          <div className="w-full">
+            <TopBar />
+            {children}
+          </div>
         </main>
       </body>
     </html>

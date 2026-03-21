@@ -3,40 +3,14 @@ import Image from "next/image";
 import { getUniqueTags } from "@/app/tags/page";
 import Link from "next/link";
 import NavItem from "./NavItem";
+import { NavLink } from "./Navbar";
 
-export interface NavLink {
-  name: string;
-  href: string;
-  icon: string;
-  noBorder?: boolean;
-  desktopName?: string;
+interface Props {
+  links: NavLink[];
 }
 
-const NavLinks = () => {
+const NavLinks = ({ links }: Props) => {
   const pathname = usePathname();
-  const links: NavLink[] = [
-    {
-      name: "Home",
-      desktopName: "All Notes",
-      href: "/",
-      icon: "/images/icon-home.svg",
-      noBorder: true,
-    },
-    { name: "Search", href: "/search", icon: "/images/icon-search.svg" },
-    {
-      name: "Archived",
-      desktopName: "Archived Notes",
-      href: "/archived",
-      icon: "/images/icon-archive.svg",
-    },
-    { name: "Tags", href: "/tags", icon: "/images/icon-tag.svg" },
-    {
-      name: "Settings",
-      href: "/settings",
-      icon: "/images/icon-settings.svg",
-      noBorder: true,
-    },
-  ];
 
   return (
     <>
@@ -47,7 +21,14 @@ const NavLinks = () => {
               key={link.name}
               className={`md:border-r  ${link.noBorder && "border-none"} flex flex-1 justify-center`}
             >
-              <NavItem linkItem={link} isActive={pathname === link.href} />
+              <NavItem
+                linkItem={link}
+                isActive={
+                  link.href === "/tags"
+                    ? pathname.startsWith("/tags")
+                    : pathname === link.href
+                }
+              />
             </li>
           ))}
         </ul>
@@ -55,7 +36,7 @@ const NavLinks = () => {
       <nav className="hidden lg:block">
         <ul className="flex flex-col px-4 py-3 justify-between">
           {links
-            .filter((link) => link.desktopName)
+            .filter((link) => link.desktopName && link.href !== "/settings")
             .map((link) => (
               <li
                 key={link.name}
@@ -72,8 +53,8 @@ const NavLinks = () => {
           {getUniqueTags().map((tag) => (
             <li key={tag}>
               <Link
-                href={`/tags/${tag}`}
-                className={`flex items-center justify-between py-2.5 px-3  ${pathname === "/tags/" + tag && "bg-primary-50 text-neutral-950 font-medium"} rounded-sm  `}
+                href={`/tags/${tag.toLowerCase()}`}
+                className={`flex items-center justify-between py-2.5 px-3  ${pathname === "/tags/" + tag.toLowerCase() && "bg-primary-50 text-neutral-950 font-medium"} rounded-sm  `}
               >
                 <div className="flex gap-x-2 items-center">
                   <Image
@@ -81,11 +62,11 @@ const NavLinks = () => {
                     alt={""}
                     width={24}
                     height={24}
-                    className={`${pathname === "/tags/" + tag && "filter-primary"}`}
+                    className={`${pathname === "/tags/" + tag.toLowerCase() && "filter-primary"}`}
                   />
                   <span className="text-sm">{tag}</span>
                 </div>
-                {pathname === "/tags/" + tag && (
+                {pathname === "/tags/" + tag.toLowerCase() && (
                   <Image
                     src="/images/icon-chevron-right.svg"
                     alt=""

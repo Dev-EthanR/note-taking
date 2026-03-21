@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { NavLink } from "./Navlinks";
 import Image from "next/image";
+import { NavLink } from "./Navbar";
 
 interface Props {
   linkItem: NavLink;
@@ -11,7 +11,7 @@ const NavItem = ({ linkItem, isActive, showChevron }: Props) => {
   return (
     <Link
       href={linkItem.href}
-      className={`flex items-center justify-center lg:justify-between lg:py-2.5 lg:px-3 w-17 md:w-20 lg:w-full ${isActive && "bg-primary-50 text-primary-500 lg:text-neutral-950 lg:font-medium"} rounded-sm`}
+      className={`flex items-center justify-center py-1 lg:justify-between lg:py-2.5 lg:px-3 w-17 md:w-20 lg:w-full ${isActive && "bg-primary-50 text-primary-500 lg:text-neutral-950 lg:font-medium"} rounded-sm`}
     >
       <div className="flex flex-col lg:flex-row gap-x-2 items-center">
         <Image
