@@ -3,13 +3,9 @@ import Image from "next/image";
 import { getUniqueTags } from "@/app/tags/page";
 import Link from "next/link";
 import NavItem from "./NavItem";
-import { NavLink } from "./Navbar";
+import { links } from "./navlink";
 
-interface Props {
-  links: NavLink[];
-}
-
-const NavLinks = ({ links }: Props) => {
+const NavLinks = () => {
   const pathname = usePathname();
 
   return (

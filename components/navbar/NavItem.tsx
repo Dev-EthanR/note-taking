@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { NavLink } from "./Navbar";
+import { NavLink } from "./navlink";
 
 interface Props {
   linkItem: NavLink;

@@ -1,6 +1,6 @@
 "use client";
 import { usePathname } from "next/navigation";
-import { links } from "./Navbar";
+import { links } from "./navlink";
 import { SearchInput } from "../Search";
 import Image from "next/image";
 import Link from "next/link";
