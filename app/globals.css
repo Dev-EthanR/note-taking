@@ -5,6 +5,7 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
+  --navheader-height: 81px;
   --color-neutral-950: #0e121b;
   --color-neutral-900: #191b25;
   --color-neutral-800: #232530;

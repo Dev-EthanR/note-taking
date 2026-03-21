@@ -9,7 +9,7 @@ const TopBar = () => {
   const pathname = usePathname();
   const title = links.find((n) => n.href === pathname)?.desktopName;
   return (
-    <div className="w-full hidden lg:flex justify-between items-center  px-8 h-20.25">
+    <div className="w-full hidden lg:flex justify-between items-center  px-8 h-(--navheader-height) lg:border-b lg:border-neutral-300">
       <span className="text-neutral-950 text-2xl font-bold">{title}</span>
       <div className="flex gap-2">
         <SearchInput />
