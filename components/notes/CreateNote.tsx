@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { Button } from "../ui/button";
 import CreateNoteHeader from "./CreateNoteHeader";
+import axios from "axios";
 
 interface Note {
   title?: string;
@@ -15,9 +16,11 @@ const CreateNote = () => {
   const { handleSubmit, register } = useForm<Note>();
 
   function onSubmit(noteData: Note) {
-    const title = noteData.title || "Untitled Note";
+    const title = noteData.title;
     const tags = noteData.tags?.split(",");
     const note = noteData.note;
+
+    axios.post("/api/note", { title, tags, note });
   }
   return (
     <form

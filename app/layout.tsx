@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import Navbar from "@/components/navbar/Navbar";
 import NavHeader from "@/components/navbar/NavHeader";
 import TopBar from "@/components/navbar/TopBar";
+import AppShell from "@/components/AppShell";
 
 const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -38,14 +39,7 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${notoSerif.variable} ${sourceCodePro.variable} antialiased  `}
       >
-        <main className="dark:bg-neutral-700 font-sans lg:flex">
-          <NavHeader screen="mobile" />
-          <Navbar />
-          <div className="w-full">
-            <TopBar />
-            {children}
-          </div>
-        </main>
+        <AppShell>{children}</AppShell>
       </body>
     </html>
   );
