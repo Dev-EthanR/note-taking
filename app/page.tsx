@@ -11,7 +11,7 @@ export default async function Home({ searchParams }: Props) {
   const session = await auth();
   const note = await searchParams;
 
-  if (!session) redirect("/login");
+  if (!session) redirect("/auth/login");
   return (
     <div className="lg:pl-8 flex flex-1 fill-to-height">
       <div className="lg:border-r lg:border-neutral-300 pt-5 pr-4 min-h-[calc(100vh-var(--navheader-height))]">
