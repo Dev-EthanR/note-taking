@@ -1,6 +1,8 @@
 import CreateNote from "@/components/notes/CreateNote";
 import CreateNoteButton from "@/components/notes/CreateNoteButton";
+import PreviewNote from "@/components/notes/PreviewNote";
 import { auth } from "@/lib/auth";
+import { prisma } from "@/lib/prisma";
 import { redirect } from "next/navigation";
 
 interface Props {
@@ -12,12 +14,22 @@ export default async function Home({ searchParams }: Props) {
   const note = await searchParams;
 
   if (!session) redirect("/auth/login");
+
+  const userNotes = await prisma.note.findMany({
+    where: {
+      userId: session.user?.id,
+    },
+  });
+
   return (
     <div className="lg:pl-8 flex flex-1 fill-to-height">
-      <div className="lg:border-r lg:border-neutral-300 pt-5 pr-4 min-h-[calc(100vh-var(--navheader-height))]">
+      <div className="lg:border-r lg:border-neutral-300 pt-5 pr-4 min-h-[calc(100vh-var(--navheader-height))] space-y-2">
         <CreateNoteButton
           style={note.note ? "invisible lg:visible" : "visible"}
         />
+        {userNotes.map((note) => (
+          <PreviewNote key={note.id} note={note} />
+        ))}
       </div>
       {note.note && (
         <div className="pt-5 lg:px-6 lg:border-r lg:border-neutral-300 min-h-[calc(100vh-var(--navheader-height))]">
