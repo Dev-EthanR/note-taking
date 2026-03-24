@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { Button } from "../ui/button";
 import CreateNoteHeader from "./CreateNoteHeader";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 interface Note {
   title?: string;
@@ -14,13 +15,18 @@ interface Note {
 
 const CreateNote = () => {
   const { handleSubmit, register } = useForm<Note>();
+  const router = useRouter();
 
-  function onSubmit(noteData: Note) {
+  async function onSubmit(noteData: Note) {
     const title = noteData.title;
-    const tags = noteData.tags?.split(",");
+    const tags = noteData.tags
+      ?.split(",")
+      .map((tag) => tag.trim())
+      .filter((tag) => (tag === "" ? null : tag));
     const note = noteData.note;
 
-    axios.post("/api/note", { title, tags, note });
+    await axios.post("/api/note", { title, tags, note });
+    router.refresh();
   }
   return (
     <form

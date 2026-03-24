@@ -39,7 +39,7 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${notoSerif.variable} ${sourceCodePro.variable} antialiased  `}
       >
-        <AppShell>{children}</AppShell>
+        <AppShell navbar={<Navbar />}>{children}</AppShell>
       </body>
     </html>
   );

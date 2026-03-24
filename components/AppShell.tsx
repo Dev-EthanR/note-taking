@@ -5,7 +5,12 @@ import Navbar from "./navbar/Navbar";
 import NavHeader from "./navbar/NavHeader";
 import TopBar from "./navbar/TopBar";
 
-function AppShell({ children }: PropsWithChildren) {
+interface Props {
+  children: React.ReactNode;
+  navbar: React.JSX.Element;
+}
+
+function AppShell({ children, navbar }: Props) {
   const pathname = usePathname();
   const isAuthPage = pathname.startsWith("/auth");
 
@@ -18,7 +23,7 @@ function AppShell({ children }: PropsWithChildren) {
       ) : (
         <>
           <NavHeader screen="mobile" />
-          <Navbar />
+          {navbar}
           <div className="w-full">
             <TopBar />
             {children}

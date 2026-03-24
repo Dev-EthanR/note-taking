@@ -1,28 +1,26 @@
-import data from "../../data.json";
+import "server-only";
+import { auth } from "@/lib/auth";
+import { prisma } from "@/lib/prisma";
+import { redirect } from "next/navigation";
 
 const Tags = async () => {
-  console.log(data);
+  const session = await auth();
+
+  if (!session) return redirect("/auth/login");
+
+  const data = await prisma.note.findMany({
+    where: {
+      id: session.user?.id,
+    },
+  });
 
   return (
     <div>
-      {getUniqueTags().map((tag) => (
-        <p key={tag}>{tag}</p>
+      {data.map((tag) => (
+        <p key={tag.id}>{tag.tags}</p>
       ))}
     </div>
   );
 };
-
-export function getUniqueTags(): string[] {
-  const tags = data.notes
-    .flatMap((item) => {
-      const value = item["tags"];
-      return Array.isArray(value) ? value : [value];
-    })
-    .filter((v) => v !== null && v != undefined);
-
-  const uniqueTags = [...new Set(tags)];
-
-  return uniqueTags;
-}
 
 export default Tags;

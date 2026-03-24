@@ -1,11 +1,11 @@
+"use client";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
-import { getUniqueTags } from "@/app/tags/page";
 import Link from "next/link";
 import NavItem from "./NavItem";
 import { links } from "./navlink";
 
-const NavLinks = () => {
+const NavLinks = ({ tags }: { tags: string[] }) => {
   const pathname = usePathname();
 
   return (
@@ -46,7 +46,7 @@ const NavLinks = () => {
               </li>
             ))}
           <p className="text-neutral-500">Tags</p>
-          {getUniqueTags().map((tag) => (
+          {tags.map((tag) => (
             <li key={tag}>
               <Link
                 href={`/tags/${tag.toLowerCase()}`}

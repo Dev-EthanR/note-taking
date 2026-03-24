@@ -19,11 +19,14 @@ export default async function Home({ searchParams }: Props) {
     where: {
       userId: session.user?.id,
     },
+    orderBy: {
+      updatedAt: "desc",
+    },
   });
 
   return (
     <div className="lg:pl-8 flex flex-1 fill-to-height">
-      <div className="lg:border-r lg:border-neutral-300 pt-5 pr-4 min-h-[calc(100vh-var(--navheader-height))] space-y-2">
+      <div className="lg:border-r lg:border-neutral-300 px-4 py-5 md:px-8 md:py-6 lg:pt-5 lg:pl-0 lg:pr-4 min-h-[calc(100vh-var(--navheader-height))] space-y-2 w-full lg:w-fit">
         <CreateNoteButton
           style={note.note ? "invisible lg:visible" : "visible"}
         />

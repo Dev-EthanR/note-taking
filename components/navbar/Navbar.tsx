@@ -1,13 +1,25 @@
-"use client";
+import { auth } from "@/lib/auth";
 import NavHeader from "./NavHeader";
 import NavLinks from "./Navlinks";
+import { prisma } from "@/lib/prisma";
 
-const Navbar = () => {
+const Navbar = async () => {
+  const session = await auth();
+
+  if (!session?.user) return null;
+
+  const notes = await prisma.note.findMany({
+    where: { userId: session.user.id },
+    select: { tags: true },
+  });
+
+  const uniqueTags = [...new Set(notes.flatMap((n) => n.tags))];
+
   return (
     <>
       <div className="lg:border-r lg:border-neutral-300  lg:w-68 lg:min-h-screen lg:px-4 lg:py-3 lg:gap-y-4">
         <NavHeader screen="desktop" />
-        <NavLinks />
+        <NavLinks tags={uniqueTags} />
       </div>
     </>
   );
