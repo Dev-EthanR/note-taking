@@ -33,9 +33,9 @@ export async function PATCH(
   { params }: { params: { id: string } },
 ) {
   try {
-    const body = await req.json();
     const session = await auth();
     if (!session?.user?.id) return NextResponse.json([], { status: 401 });
+    const body = await req.json();
 
     const { title, tags, content } = body;
 
