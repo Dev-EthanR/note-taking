@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import CreateNoteButton from "./CreateNoteButton";
 import PreviewNote from "./PreviewNote";
 import CreateNote from "./CreateNote";
@@ -24,7 +24,12 @@ const ClientNote = ({ isNoteActive, userNotes }: Props) => {
       router.replace(`/?note=${userNotes[0].title}-${userNotes[0].id}`);
     }
   }, []);
-
+  useLayoutEffect(() => {
+    const activeNote = userNotes.find((n) => n.id === activeId);
+    if (activeNote) {
+      setNewTitle(activeNote.title);
+    }
+  }, [activeId, userNotes]);
   return (
     <>
       <div className="lg:border-r lg:border-neutral-300 px-3 py-5 md:px-8 md:py-6 lg:pt-5 lg:pl-0 lg:pr-4 min-h-[calc(100vh-var(--navheader-height))] space-y-2 lg:w-fit">
@@ -51,6 +56,7 @@ const ClientNote = ({ isNoteActive, userNotes }: Props) => {
             {userNotes.map((note) => (
               <PreviewNote
                 key={note.id}
+                updatedTitle={activeId === note.id ? newTitle : undefined}
                 note={note}
                 activeId={activeId}
                 noteParam={noteParam}

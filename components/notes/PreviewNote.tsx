@@ -33,7 +33,7 @@ const PreviewNote = ({
       }}
     >
       <h3 className="text-neutral-950 font-semibold">
-        {note?.title ?? updatedTitle}
+        {isActive ? (updatedTitle ?? note?.title) : note?.title}
       </h3>
       <div className="space-x-3">
         {note?.tags.map((tag) => (
