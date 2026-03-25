@@ -81,7 +81,12 @@ const CreateNote = ({ setTitle }: Props) => {
       .filter((tag) => (tag === "" ? null : tag));
     const note = formData.note;
     if (noteData?.id) {
-      await axios.patch(`/api/note/${noteData.id}`, { title, tags, note });
+      const DB_Data = await axios.patch(`/api/note/${noteData.id}`, {
+        title,
+        tags,
+        note,
+      });
+      setNoteData(DB_Data.data);
     } else {
       const DB_data = await axios.post("/api/note", { title, tags, note });
       router.push(`/?note=${DB_data.data.title}-${DB_data.data.id}`);
