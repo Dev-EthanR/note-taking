@@ -61,7 +61,7 @@ const CreateNote = ({ setTitle }: Props) => {
   const title = watch("title");
 
   useEffect(() => {
-    setTitle(title || "Untilted Note");
+    setTitle(title || "Untitled Note");
   }, [title]);
 
   const router = useRouter();
