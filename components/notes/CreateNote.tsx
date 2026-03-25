@@ -6,6 +6,9 @@ import { Button } from "../ui/button";
 import CreateNoteHeader from "./CreateNoteHeader";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { Note as dbNote } from "@/generated/prisma/client";
 
 interface Note {
   title?: string;
@@ -13,9 +16,62 @@ interface Note {
   note?: string;
 }
 
-const CreateNote = () => {
-  const { handleSubmit, register } = useForm<Note>();
+interface Props {
+  setTitle: (title: string) => void;
+}
+
+const CreateNote = ({ setTitle }: Props) => {
+  const [note, setNote] = useState<dbNote | null>();
+  const searchParams = useSearchParams();
+  const noteID = searchParams.get("note")?.split("-")[1];
+  useEffect(() => {
+    if (!noteID || noteID === "create") {
+      setNote(null);
+      reset({ title: "", tags: "", note: "" });
+      return;
+    }
+
+    async function getNote() {
+      try {
+        const response = await axios.get(`/api/note/${noteID}`);
+        setNote(response.data);
+      } catch (err: any) {
+        if (err.response?.status === 404) return;
+        console.error(err);
+      }
+    }
+    getNote();
+  }, [noteID]);
+
+  const { handleSubmit, register, watch, reset } = useForm<Note>();
+
+  useEffect(() => {
+    if (!note) {
+      reset({ title: "", tags: "", note: "" });
+      setNote(null);
+      return;
+    }
+    reset({
+      title: note?.title,
+      tags: note?.tags.join(", "),
+      note: note?.content,
+    });
+  }, [note]);
+
+  const title = watch("title");
+
+  useEffect(() => {
+    setTitle(title || "Untilted Note");
+  }, [title]);
+
   const router = useRouter();
+  const date = note?.updatedAt
+    ? new Date(note.updatedAt).toLocaleDateString("en-GB", {
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+      })
+    : null;
 
   async function onSubmit(noteData: Note) {
     const title = noteData.title;
@@ -25,9 +81,11 @@ const CreateNote = () => {
       .filter((tag) => (tag === "" ? null : tag));
     const note = noteData.note;
 
-    await axios.post("/api/note", { title, tags, note });
+    const DB_data = await axios.post("/api/note", { title, tags, note });
+    router.push(`/?note=${DB_data.data.title}-${DB_data.data.id}`);
     router.refresh();
   }
+
   return (
     <form
       className="flex flex-col lg:flex-col-reverse h-full"
@@ -84,7 +142,7 @@ const CreateNote = () => {
           </CreateNoteHeader>
           <CreateNoteHeader icon="/images/icon-clock.svg" title="Last edited">
             <span className="text-xs md:text-sm text-neutral-400">
-              Not yet saved
+              {note?.updatedAt ? date : "Not yet saved"}
             </span>
           </CreateNoteHeader>
         </div>

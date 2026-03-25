@@ -1,15 +1,42 @@
 import { Note } from "@/generated/prisma/client";
+import clsx from "clsx";
+import { useRouter } from "next/navigation";
 
 interface Props {
-  note: Note;
+  note: Note | null;
+  activeId: string | undefined;
+  noteParam: string | null;
+  updatedTitle?: string;
+  isNew?: boolean;
 }
 
-const PreviewNote = ({ note }: Props) => {
+const PreviewNote = ({
+  note,
+  updatedTitle,
+  activeId,
+  isNew,
+  noteParam,
+}: Props) => {
+  const router = useRouter();
+  const isActive = isNew ? noteParam === "create" : activeId === note?.id;
+
   return (
-    <div className="p-2 space-y-2 border-b border-neutral-200">
-      <h3 className="text-neutral-950 font-semibold">{note.title}</h3>
+    <div
+      className={clsx(
+        "p-2 space-y-2 border-b border-neutral-200 rounded-md cursor-pointer w-full",
+        isActive && "lg:bg-neutral-100",
+      )}
+      role="button"
+      onClick={() => {
+        if (isNew) return;
+        router.push(`/?note=${note?.title}-${note?.id}`);
+      }}
+    >
+      <h3 className="text-neutral-950 font-semibold">
+        {note?.title ?? updatedTitle}
+      </h3>
       <div className="space-x-3">
-        {note.tags.map((tag) => (
+        {note?.tags.map((tag) => (
           <span
             key={tag}
             className="bg-neutral-200 px-1.5 py-0.5 rounded-sm w-11 h-4.5  text-xs"
@@ -19,7 +46,7 @@ const PreviewNote = ({ note }: Props) => {
         ))}
       </div>
       <p className="text-neutral-700 text-xs">
-        {note.updatedAt.toLocaleDateString("en-GB", {
+        {note?.updatedAt.toLocaleDateString("en-GB", {
           day: "numeric",
           month: "short",
           year: "numeric",

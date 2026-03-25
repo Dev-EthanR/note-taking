@@ -12,5 +12,5 @@ export async function GET() {
   });
 
   const uniqueTags = [...new Set(notes.flatMap((n) => n.tags))];
-  return NextResponse.json(uniqueTags);
+  return NextResponse.json(uniqueTags, { status: 200 });
 }
