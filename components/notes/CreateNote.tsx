@@ -21,12 +21,12 @@ interface Props {
 }
 
 const CreateNote = ({ setTitle }: Props) => {
-  const [note, setNote] = useState<dbNote | null>();
+  const [noteData, setNoteData] = useState<dbNote | null>();
   const searchParams = useSearchParams();
   const noteID = searchParams.get("note")?.split("-")[1];
   useEffect(() => {
     if (!noteID || noteID === "create") {
-      setNote(null);
+      setNoteData(null);
       reset({ title: "", tags: "", note: "" });
       return;
     }
@@ -34,7 +34,7 @@ const CreateNote = ({ setTitle }: Props) => {
     async function getNote() {
       try {
         const response = await axios.get(`/api/note/${noteID}`);
-        setNote(response.data);
+        setNoteData(response.data);
       } catch (err: any) {
         if (err.response?.status === 404) return;
         console.error(err);
@@ -46,17 +46,17 @@ const CreateNote = ({ setTitle }: Props) => {
   const { handleSubmit, register, watch, reset } = useForm<Note>();
 
   useEffect(() => {
-    if (!note) {
+    if (!noteData) {
       reset({ title: "", tags: "", note: "" });
-      setNote(null);
+      setNoteData(null);
       return;
     }
     reset({
-      title: note?.title,
-      tags: note?.tags.join(", "),
-      note: note?.content,
+      title: noteData?.title,
+      tags: noteData?.tags.join(", "),
+      note: noteData?.content,
     });
-  }, [note]);
+  }, [noteData]);
 
   const title = watch("title");
 
@@ -65,24 +65,27 @@ const CreateNote = ({ setTitle }: Props) => {
   }, [title]);
 
   const router = useRouter();
-  const date = note?.updatedAt
-    ? new Date(note.updatedAt).toLocaleDateString("en-GB", {
+  const date = noteData?.updatedAt
+    ? new Date(noteData.updatedAt).toLocaleDateString("en-GB", {
         day: "numeric",
         month: "short",
         year: "numeric",
       })
     : null;
 
-  async function onSubmit(noteData: Note) {
-    const title = noteData.title;
-    const tags = noteData.tags
+  async function onSubmit(formData: Note) {
+    const title = formData.title;
+    const tags = formData.tags
       ?.split(",")
       .map((tag) => tag.trim())
       .filter((tag) => (tag === "" ? null : tag));
-    const note = noteData.note;
-
-    const DB_data = await axios.post("/api/note", { title, tags, note });
-    router.push(`/?note=${DB_data.data.title}-${DB_data.data.id}`);
+    const note = formData.note;
+    if (noteData?.id) {
+      await axios.patch(`/api/note/${noteData.id}`, { title, tags, note });
+    } else {
+      const DB_data = await axios.post("/api/note", { title, tags, note });
+      router.push(`/?note=${DB_data.data.title}-${DB_data.data.id}`);
+    }
     router.refresh();
   }
 
@@ -142,7 +145,7 @@ const CreateNote = ({ setTitle }: Props) => {
           </CreateNoteHeader>
           <CreateNoteHeader icon="/images/icon-clock.svg" title="Last edited">
             <span className="text-xs md:text-sm text-neutral-400">
-              {note?.updatedAt ? date : "Not yet saved"}
+              {noteData?.updatedAt ? date : "Not yet saved"}
             </span>
           </CreateNoteHeader>
         </div>
