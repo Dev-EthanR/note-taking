@@ -1,11 +1,11 @@
 "use client";
-import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { Note } from "@/generated/prisma/client";
+import clsx from "clsx";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useLayoutEffect, useState } from "react";
+import CreateNote from "./CreateNote";
 import CreateNoteButton from "./CreateNoteButton";
 import PreviewNote from "./PreviewNote";
-import CreateNote from "./CreateNote";
-import { Note } from "@/generated/prisma/client";
-import { useRouter, useSearchParams } from "next/navigation";
-import clsx from "clsx";
 
 interface Props {
   isNoteActive?: string | undefined;
@@ -13,7 +13,7 @@ interface Props {
 }
 
 const ClientNote = ({ isNoteActive, userNotes }: Props) => {
-  const [newTitle, setNewTitle] = useState("Untilted Note");
+  const [newTitle, setNewTitle] = useState("Untitled Note");
   const searchParams = useSearchParams();
   const noteParam = searchParams.get("note");
   const activeId = noteParam?.split("-")[1];
@@ -42,27 +42,26 @@ const ClientNote = ({ isNoteActive, userNotes }: Props) => {
             isNoteActive ? "hidden lg:block" : "block",
           )}
         >
-          <>
-            {noteParam === "create" && (
-              <PreviewNote
-                note={null}
-                updatedTitle={newTitle}
-                activeId={activeId}
-                isNew={true}
-                noteParam={noteParam}
-              />
-            )}
+          {/* REFACTOR */}
+          {noteParam === "create" && (
+            <PreviewNote
+              note={null}
+              updatedTitle={newTitle}
+              activeId={activeId}
+              isNew={true}
+              noteParam={noteParam}
+            />
+          )}
 
-            {userNotes.map((note) => (
-              <PreviewNote
-                key={note.id}
-                updatedTitle={activeId === note.id ? newTitle : undefined}
-                note={note}
-                activeId={activeId}
-                noteParam={noteParam}
-              />
-            ))}
-          </>
+          {userNotes.map((note) => (
+            <PreviewNote
+              key={note.id}
+              updatedTitle={activeId === note.id ? newTitle : undefined}
+              note={note}
+              activeId={activeId}
+              noteParam={noteParam}
+            />
+          ))}
         </div>
       </div>
       {isNoteActive && (

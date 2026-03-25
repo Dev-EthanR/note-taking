@@ -43,6 +43,7 @@ export function LoginForm({
   } = useForm<FormData>({
     resolver: zodResolver(signInSchema),
   });
+  const router = useRouter();
 
   const onSubmit = async (formData: FormData) => {
     const email = formData.email;
@@ -56,7 +57,7 @@ export function LoginForm({
     if (result.error) {
       setServerError("Invalid email or password");
     } else {
-      useRouter().push("/");
+      router.push("/");
     }
   };
   return (

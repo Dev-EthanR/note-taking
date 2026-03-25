@@ -20,6 +20,19 @@ const PreviewNote = ({
   const router = useRouter();
   const isActive = isNew ? noteParam === "create" : activeId === note?.id;
 
+  const formattedDate = note?.updatedAt
+    ? new Date(note.updatedAt).toLocaleDateString("en-GB", {
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+      })
+    : null;
+
+  const handleClick = () => {
+    if (isNew) return;
+    router.push(`/?note=${note?.title}-${note?.id}`);
+  };
+
   return (
     <div
       className={clsx(
@@ -27,10 +40,9 @@ const PreviewNote = ({
         isActive && "lg:bg-neutral-100",
       )}
       role="button"
-      onClick={() => {
-        if (isNew) return;
-        router.push(`/?note=${note?.title}-${note?.id}`);
-      }}
+      tabIndex={0}
+      onKeyDown={(e) => e.key === "Enter" && handleClick()}
+      onClick={handleClick}
     >
       <h3 className="text-neutral-950 font-semibold">
         {isActive ? (updatedTitle ?? note?.title) : note?.title}
@@ -45,13 +57,7 @@ const PreviewNote = ({
           </span>
         ))}
       </div>
-      <p className="text-neutral-700 text-xs">
-        {note?.updatedAt.toLocaleDateString("en-GB", {
-          day: "numeric",
-          month: "short",
-          year: "numeric",
-        })}
-      </p>
+      <p className="text-neutral-700 text-xs">{formattedDate}</p>
     </div>
   );
 };
