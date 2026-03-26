@@ -12,7 +12,7 @@ const NavLinks = ({ tags }: { tags: string[] }) => {
   return (
     <>
       <nav className="fixed bottom-0 w-full lg:hidden">
-        <ul className="flex px-4 py-3 justify-between lg:flex-col">
+        <ul className="flex px-4 py-3 justify-between lg:flex-col bg-white shadow-2xl shadow-neutral-700 border-t border-neutral-200">
           {links.map((link) => (
             <li
               key={link.name}
@@ -46,34 +46,36 @@ const NavLinks = ({ tags }: { tags: string[] }) => {
                 />
               </li>
             ))}
-          <p className="text-neutral-500">Tags</p>
-          {tags.map((tag) => (
-            <li key={tag}>
-              <Link
-                href={`/tags/${tag.toLowerCase()}`}
-                className={`flex items-center justify-between py-2.5 px-3  ${pathname === "/tags/" + tag.toLowerCase() && "bg-primary-50 text-neutral-950 font-medium"} rounded-sm  `}
-              >
-                <div className="flex gap-x-2 items-center">
-                  <Image
-                    src={"/images/icon-tag.svg"}
-                    alt={""}
-                    width={24}
-                    height={24}
-                    className={`${pathname === "/tags/" + tag.toLowerCase() && "filter-primary"}`}
-                  />
-                  <span className="text-sm">{tag}</span>
-                </div>
-                {pathname === "/tags/" + tag.toLowerCase() && (
-                  <Image
-                    src="/images/icon-chevron-right.svg"
-                    alt=""
-                    width={20}
-                    height={20}
-                  />
-                )}
-              </Link>
-            </li>
-          ))}
+          <p className="text-neutral-500 text-sm px-2">Tags</p>
+          <div className="overflow-y-auto max-h-[calc(100vh-var(--navheader-height)-150px)]">
+            {tags.map((tag) => (
+              <li key={tag}>
+                <Link
+                  href={`/tags/${tag.toLowerCase()}`}
+                  className={`flex items-center justify-between py-2.5 px-3  ${pathname === "/tags/" + tag.toLowerCase() && "bg-primary-50 text-neutral-950 font-medium"} rounded-sm  `}
+                >
+                  <div className="flex gap-x-2 items-center">
+                    <Image
+                      src={"/images/icon-tag.svg"}
+                      alt={""}
+                      width={24}
+                      height={24}
+                      className={`${pathname === "/tags/" + tag.toLowerCase() && "filter-primary"}`}
+                    />
+                    <span className="text-sm">{tag}</span>
+                  </div>
+                  {pathname === "/tags/" + tag.toLowerCase() && (
+                    <Image
+                      src="/images/icon-chevron-right.svg"
+                      alt=""
+                      width={20}
+                      height={20}
+                    />
+                  )}
+                </Link>
+              </li>
+            ))}
+          </div>
         </ul>
       </nav>
     </>

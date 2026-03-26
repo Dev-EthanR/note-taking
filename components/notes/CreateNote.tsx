@@ -97,7 +97,7 @@ const CreateNote = ({ setTitle }: Props) => {
 
   return (
     <form
-      className="flex flex-col lg:flex-col-reverse h-full"
+      className="flex flex-col lg:flex-col-reverse h-full pb-8 lg:pb-0"
       onSubmit={handleSubmit(onSubmit)}
     >
       <div className="flex justify-between border-b-2 pb-2 mb-2 border-neutral-200 lg:border-t-2 lg:border-b-0 lg:py-4 lg:my-2">

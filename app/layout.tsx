@@ -1,11 +1,9 @@
-import type { Metadata } from "next";
-import { Inter, Noto_Serif, Source_Code_Pro, Geist } from "next/font/google";
-import "./globals.css";
-import { cn } from "@/lib/utils";
-import Navbar from "@/components/navbar/Navbar";
-import NavHeader from "@/components/navbar/NavHeader";
-import TopBar from "@/components/navbar/TopBar";
 import AppShell from "@/components/AppShell";
+import Navbar from "@/components/navbar/Navbar";
+import { cn } from "@/lib/utils";
+import type { Metadata } from "next";
+import { Geist, Inter, Noto_Serif, Source_Code_Pro } from "next/font/google";
+import "./globals.css";
 
 const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 

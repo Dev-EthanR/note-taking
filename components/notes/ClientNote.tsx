@@ -38,7 +38,7 @@ const ClientNote = ({ isNoteActive, userNotes }: Props) => {
         />
         <div
           className={clsx(
-            "space-y-2 overflow-y-auto max-h-[calc(100vh-var(--navheader-height)-100px)]",
+            "space-y-2 overflow-y-auto max-h-[calc(100vh-var(--navheader-height)-55px)] lg:max-h-[calc(100vh-var(--navheader-height)-100px)]",
             isNoteActive ? "hidden lg:block" : "block",
           )}
         >
@@ -65,7 +65,7 @@ const ClientNote = ({ isNoteActive, userNotes }: Props) => {
         </div>
       </div>
       {isNoteActive && (
-        <div className="pt-5 lg:px-6 lg:border-r lg:border-neutral-300 min-h-[calc(100vh-var(--navheader-height))]">
+        <div className="pt-5 pr-6 md:pr-12 lg:px-6 lg:border-r lg:border-neutral-300 min-h-[calc(100vh-var(--navheader-height))] lg:w-137.5 grow">
           <CreateNote setTitle={setNewTitle} />
         </div>
       )}
