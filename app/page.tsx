@@ -19,7 +19,9 @@ export default async function Home({ searchParams }: Props) {
   const userNotes = await prisma.note.findMany({
     where: {
       userId: session.user?.id,
+      status: null,
     },
+
     orderBy: {
       updatedAt: "desc",
     },
@@ -34,8 +36,8 @@ export default async function Home({ searchParams }: Props) {
     >
       <ClientNote isNoteActive={note.note} userNotes={userNotes} />
       <div className="hidden lg:block pl-4 py-5 space-y-3">
-        <ArchiveNote />
-        <DeleteNote />
+        <ArchiveNote userNotes={userNotes} />
+        <DeleteNote userNotes={userNotes} />
       </div>
     </div>
   );

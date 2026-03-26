@@ -31,7 +31,7 @@ const PreviewNote = ({
 
   const handleClick = () => {
     if (isNew) return;
-    router.push(`/?note=${note?.title}-${note?.id}`);
+    router.push(`?note=${note?.title}-${note?.id}`);
   };
 
   const title = isActive ? (updatedTitle ?? note?.title) : note?.title;

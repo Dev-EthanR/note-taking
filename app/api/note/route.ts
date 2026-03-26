@@ -16,6 +16,7 @@ export async function POST(req: NextRequest) {
         title: body.title,
         tags: body.tags,
         content: body.note,
+        status: body.status,
         userId: session?.user?.id,
       },
     });

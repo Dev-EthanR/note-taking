@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { Button } from "../ui/button";
 import CreateNoteHeader from "./CreateNoteHeader";
 import axios from "axios";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { Note as dbNote } from "@/generated/prisma/client";
@@ -24,6 +24,7 @@ interface Props {
 const CreateNote = ({ setTitle }: Props) => {
   const [noteData, setNoteData] = useState<dbNote | null>();
   const searchParams = useSearchParams();
+  const pathname = usePathname();
   const noteID = searchParams.get("note")?.split("-")[1];
   useEffect(() => {
     if (!noteID || noteID === "create") {
@@ -89,8 +90,14 @@ const CreateNote = ({ setTitle }: Props) => {
       });
       setNoteData(DB_Data.data);
     } else {
-      const DB_data = await axios.post("/api/note", { title, tags, note });
-      router.push(`/?note=${DB_data.data.title}-${DB_data.data.id}`);
+      const archiveStatus = pathname === "/archived" ? "Archived" : null;
+      const DB_data = await axios.post("/api/note", {
+        title,
+        tags,
+        note,
+        status: archiveStatus,
+      });
+      router.push(`?note=${DB_data.data.title}-${DB_data.data.id}`);
     }
     router.refresh();
   }

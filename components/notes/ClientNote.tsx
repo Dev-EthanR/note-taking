@@ -10,9 +10,10 @@ import PreviewNote from "./PreviewNote";
 interface Props {
   isNoteActive?: string | undefined;
   userNotes: Note[];
+  page?: "/archived" | "";
 }
 
-const ClientNote = ({ isNoteActive, userNotes }: Props) => {
+const ClientNote = ({ isNoteActive, userNotes, page = "" }: Props) => {
   const [newTitle, setNewTitle] = useState("Untitled Note");
   const searchParams = useSearchParams();
   const noteParam = searchParams.get("note");
@@ -21,7 +22,7 @@ const ClientNote = ({ isNoteActive, userNotes }: Props) => {
 
   useEffect(() => {
     if (!noteParam && userNotes[0]) {
-      router.replace(`/?note=${userNotes[0].title}-${userNotes[0].id}`);
+      router.replace(`${page}/?note=${userNotes[0].title}-${userNotes[0].id}`);
     }
   }, []);
   useLayoutEffect(() => {
