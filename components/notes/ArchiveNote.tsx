@@ -7,16 +7,22 @@ import { useRouter } from "next/navigation";
 
 interface Props {
   userNotes: Note[];
+  name?: string;
+  imageUrl?: string;
 }
 
-const ArchiveNote = ({ userNotes }: Props) => {
+const ArchiveNote = ({
+  name = "Archive Note",
+  imageUrl = "/images/icon-archive.svg",
+  userNotes,
+}: Props) => {
   const searchParams = useSearchParams();
   const noteID = searchParams.get("note")?.split("-")[1];
   const router = useRouter();
   return (
     <NoteAction
-      name="Archive Note"
-      imageUrl="/images/icon-archive.svg"
+      name={name}
+      imageUrl={imageUrl}
       handleClick={async () => {
         await axios.patch(`/api/note/archive/${noteID}`, { archive: true });
         router.push(`/?note=${userNotes[1].title}-${userNotes[1].id}`);

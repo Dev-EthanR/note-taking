@@ -109,7 +109,7 @@ const CreateNote = ({ setTitle }: Props) => {
     >
       <div className="flex justify-between border-b-2 pb-2 mb-2 border-neutral-200 lg:border-t-2 lg:border-b-0 lg:py-4 lg:my-2">
         <Link
-          href="/"
+          href={pathname}
           className="flex items-center gap-1 text-neutral-600 text-sm lg:hidden "
         >
           <Image
@@ -121,7 +121,7 @@ const CreateNote = ({ setTitle }: Props) => {
           Go Back
         </Link>
         <div className="lg:flex flex-row-reverse gap-2">
-          <Link href="/">
+          <Link href={pathname}>
             <Button
               variant="link_button"
               className="text-neutral-600 lg:bg-neutral-100 lg:hover:bg-neutral-200"
@@ -157,6 +157,13 @@ const CreateNote = ({ setTitle }: Props) => {
               aria-label="tags"
             />
           </CreateNoteHeader>
+          {noteData?.status && (
+            <CreateNoteHeader icon="/images/icon-status.svg" title="Status">
+              <span className="text-xs md:text-sm text-neutral-950">
+                {noteData.status}
+              </span>
+            </CreateNoteHeader>
+          )}
           <CreateNoteHeader icon="/images/icon-clock.svg" title="Last edited">
             <span className="text-xs md:text-sm text-neutral-400">
               {noteData?.updatedAt ? date : "Not yet saved"}
