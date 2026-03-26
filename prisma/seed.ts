@@ -1,6 +1,6 @@
-// prisma/seed.ts
+// npx tsx prisma/seed.ts
 import { prisma } from "@/lib/prisma";
-import data from "./data.json";
+import data from "../data.json";
 
 async function main() {
   const user = await prisma.user.findFirst({

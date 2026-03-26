@@ -33,7 +33,7 @@ const page = async ({ params, searchParams }: Props) => {
     },
   });
   return (
-    <div className="py-6">
+    <div className="py-6 lg:py-0">
       {!note.note && (
         <>
           <Link

@@ -25,7 +25,8 @@ const ArchiveNote = ({
       imageUrl={imageUrl}
       handleClick={async () => {
         await axios.patch(`/api/note/archive/${noteID}`, { archive: true });
-        router.push(`/?note=${userNotes[1].title}-${userNotes[1].id}`);
+        if (userNotes.length < 2) router.push("/");
+        else router.push(`/?note=${userNotes[1].title}-${userNotes[1].id}`);
         router.refresh();
       }}
     />
