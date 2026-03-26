@@ -33,6 +33,12 @@ const PreviewNote = ({
     router.push(`/?note=${note?.title}-${note?.id}`);
   };
 
+  const title = isActive ? (updatedTitle ?? note?.title) : note?.title;
+
+  function checkString(str: string, maxLength: number) {
+    if (str.length > maxLength) return str.slice(0, maxLength) + "...";
+    return str;
+  }
   return (
     <div
       className={clsx(
@@ -45,7 +51,7 @@ const PreviewNote = ({
       onClick={handleClick}
     >
       <h3 className="text-neutral-950 font-semibold">
-        {isActive ? (updatedTitle ?? note?.title) : note?.title}
+        {checkString(title as string, 31)}
       </h3>
       <div className="space-x-3">
         {note?.tags.map((tag) => (

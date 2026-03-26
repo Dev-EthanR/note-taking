@@ -132,7 +132,7 @@ const CreateNote = ({ setTitle }: Props) => {
         </div>
       </div>
       <div className="flex flex-col space-y-4 h-[95%] lg:h-full flex-1">
-        <input
+        <textarea
           id="title"
           placeholder="Enter a title..."
           className="border-none outline-0 text-neutral-950 text-2xl font-bold placeholder:text-neutral-950"
