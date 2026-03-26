@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import NavItem from "./NavItem";
 import { links } from "./navlink";
+import { checkString } from "@/utils/checkString";
 
 const NavLinks = ({ tags }: { tags: string[] }) => {
   const pathname = usePathname();
@@ -62,7 +63,9 @@ const NavLinks = ({ tags }: { tags: string[] }) => {
                       height={24}
                       className={`${pathname === "/tags/" + tag.toLowerCase() && "filter-primary"}`}
                     />
-                    <span className="text-sm">{tag}</span>
+                    <span className="text-sm max-w-34.5">
+                      {checkString(tag, 18)}
+                    </span>
                   </div>
                   {pathname === "/tags/" + tag.toLowerCase() && (
                     <Image

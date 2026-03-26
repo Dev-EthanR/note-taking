@@ -135,16 +135,17 @@ const CreateNote = ({ setTitle }: Props) => {
         <textarea
           id="title"
           placeholder="Enter a title..."
-          className="border-none outline-0 text-neutral-950 text-2xl font-bold placeholder:text-neutral-950"
+          className="border-none outline-0 text-neutral-950 text-2xl font-bold placeholder:text-neutral-950 resize-none"
           {...register("title")}
           aria-label="title"
         />
-        <div className="grid grid-cols-[115px_minmax(220px,1fr)] gap-y-2 md:grid-cols-[115px_minmax(500,1fr)] border-b-2 pb-4 mb-4 border-b-neutral-200">
+        <div className="min-w-0 grid grid-cols-[115px_minmax(220px,1fr)] gap-y-2 md:grid-cols-[115px_minmax(0,1fr)] border-b-2 pb-4 mb-4 border-b-neutral-200">
           <CreateNoteHeader icon="/images/icon-tag.svg" title="Tags">
             <textarea
               id="tags"
               placeholder="Add tags separated by commas (e.g. Work, Planning)"
-              className="text-xs md:text-sm border-none outline-0 resize-none"
+              className="text-xs md:text-sm border-none outline-0 resize-none w-full min-w-0 wrap-break-word"
+              wrap="hard"
               {...register("tags")}
               aria-label="tags"
             />

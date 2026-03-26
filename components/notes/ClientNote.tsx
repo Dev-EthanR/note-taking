@@ -32,7 +32,7 @@ const ClientNote = ({ isNoteActive, userNotes }: Props) => {
   }, [activeId, userNotes]);
   return (
     <>
-      <div className="lg:border-r lg:border-neutral-300 px-3 py-5 md:px-8 md:py-6 lg:pt-5 lg:pl-0 lg:pr-4 min-h-[calc(100vh-var(--navheader-height))] space-y-2 lg:w-fit">
+      <div className="lg:border-r lg:border-neutral-300 px-3 py-5 md:px-8 md:py-6 lg:pt-5 lg:pl-0 lg:pr-4 min-h-[calc(100vh-var(--navheader-height))] space-y-2 lg:w-fit lg:max-w-90">
         <CreateNoteButton
           style={isNoteActive ? "invisible lg:visible" : "visible"}
         />

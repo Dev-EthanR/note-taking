@@ -1,4 +1,5 @@
 import { Note } from "@/generated/prisma/client";
+import { checkString } from "@/utils/checkString";
 import clsx from "clsx";
 import { useRouter } from "next/navigation";
 
@@ -35,10 +36,6 @@ const PreviewNote = ({
 
   const title = isActive ? (updatedTitle ?? note?.title) : note?.title;
 
-  function checkString(str: string, maxLength: number) {
-    if (str.length > maxLength) return str.slice(0, maxLength) + "...";
-    return str;
-  }
   return (
     <div
       className={clsx(

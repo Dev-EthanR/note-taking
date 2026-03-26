@@ -15,7 +15,7 @@ const CreateNoteHeader = ({ icon, title, children }: Props) => {
           <span>{title}</span>
         </div>
       </div>
-      {children}
+      <div className="min-w-0">{children}</div>
     </>
   );
 };
