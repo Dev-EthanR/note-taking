@@ -1,3 +1,4 @@
+// REFACTOR
 "use client";
 import { Note } from "@/generated/prisma/client";
 import clsx from "clsx";
@@ -10,10 +11,16 @@ import PreviewNote from "./PreviewNote";
 interface Props {
   isNoteActive?: string | undefined;
   userNotes: Note[];
-  page?: "/archived" | "";
+  page?: "/archived" | "/tags/" | "";
+  tagSlug?: string;
 }
 
-const ClientNote = ({ isNoteActive, userNotes, page = "" }: Props) => {
+const ClientNote = ({
+  isNoteActive,
+  userNotes,
+  page = "",
+  tagSlug = "",
+}: Props) => {
   const [newTitle, setNewTitle] = useState("Untitled Note");
   const searchParams = useSearchParams();
   const noteParam = searchParams.get("note");
@@ -25,7 +32,9 @@ const ClientNote = ({ isNoteActive, userNotes, page = "" }: Props) => {
     if (!mediaQuery.matches) return;
 
     if (!noteParam && userNotes[0]) {
-      router.replace(`${page}/?note=${userNotes[0].title}-${userNotes[0].id}`);
+      router.replace(
+        `${page}${tagSlug}/?note=${userNotes[0].title}-${userNotes[0].id}`,
+      );
     }
   }, []);
   useLayoutEffect(() => {
@@ -37,7 +46,7 @@ const ClientNote = ({ isNoteActive, userNotes, page = "" }: Props) => {
   return (
     <>
       <div className="lg:border-r lg:border-neutral-300 px-3 py-5 md:px-8 md:py-6 lg:pt-5 lg:pl-0 lg:pr-4 min-h-[calc(100vh-var(--navheader-height))] space-y-2 lg:w-fit lg:max-w-90">
-        {!isNoteActive && (
+        {!isNoteActive && page !== "/tags/" && (
           <h1 className="text-neutral-950 text-2xl font-bold lg:hidden">
             {page === "/archived" ? "Archived Notes" : "All Notes"}
           </h1>
@@ -54,6 +63,16 @@ const ClientNote = ({ isNoteActive, userNotes, page = "" }: Props) => {
           >
             All your archived notes are stored here. You can restore or delete
             them anytime.
+          </p>
+        )}
+        {page === "/tags/" && (
+          <p
+            className={clsx(
+              "text-sm w-full lg:max-w-60 text-neutral-700",
+              isNoteActive ? "hidden lg:block" : "block",
+            )}
+          >
+            All notes with the ”{tagSlug}” tag are shown here.
           </p>
         )}
         <div

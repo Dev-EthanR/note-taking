@@ -7,10 +7,18 @@ import Link from "next/link";
 
 const TopBar = () => {
   const pathname = usePathname();
-  const title = links.find((n) => n.href === pathname)?.desktopName;
+  let title = links.find((n) => n.href === pathname)?.desktopName;
+
+  const isTagsPage = pathname.startsWith("/tags/");
+  if (isTagsPage) {
+    title = pathname.split("/")[2];
+  }
   return (
     <div className="w-full hidden lg:flex justify-between items-center  px-8 h-(--navheader-height) lg:border-b lg:border-neutral-300">
-      <span className="text-neutral-950 text-2xl font-bold">{title}</span>
+      <span className="text-neutral-950 text-2xl font-bold">
+        {isTagsPage && <span className="text-neutral-600">Notes Tagged: </span>}
+        {title}
+      </span>
       <div className="flex gap-2">
         <SearchInput />
         <Link href="/settings" className="flex px-4">
