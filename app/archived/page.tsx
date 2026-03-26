@@ -39,13 +39,15 @@ async function Archive({ searchParams }: Props) {
         isNoteActive={note.note}
         userNotes={userNotes}
       />
-      <div className="hidden lg:block pl-4 py-5 space-y-3">
-        <ArchiveNote
-          name="Restore Note"
-          imageUrl="/images/icon-restore.svg"
-          userNotes={userNotes}
-        />
-        <DeleteNote userNotes={userNotes} />
+      <div className={userNotes.length < 1 ? "invisible" : ""}>
+        <div className="hidden lg:block pl-4 py-5 space-y-3">
+          <ArchiveNote
+            name="Restore Note"
+            imageUrl="/images/icon-restore.svg"
+            userNotes={userNotes}
+          />
+          <DeleteNote userNotes={userNotes} />
+        </div>
       </div>
     </div>
   );

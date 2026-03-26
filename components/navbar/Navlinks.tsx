@@ -7,7 +7,7 @@ import NavTags from "./NavTags";
 
 const NavLinks = ({ tags }: { tags: string[] }) => {
   const pathname = usePathname();
-
+  console.log(tags.length);
   return (
     <>
       <nav className="fixed bottom-0 w-full lg:hidden">
@@ -45,7 +45,9 @@ const NavLinks = ({ tags }: { tags: string[] }) => {
                 />
               </li>
             ))}
-          <p className="text-neutral-500 text-sm px-2">Tags</p>
+          {tags.length !== 0 && (
+            <p className="text-neutral-500 text-sm px-2">Tags</p>
+          )}
           <NavTags tags={tags} />
         </ul>
       </nav>

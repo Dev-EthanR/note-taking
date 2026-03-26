@@ -19,7 +19,9 @@ const DeleteNote = ({ userNotes }: Props) => {
       imageUrl="/images/icon-delete.svg"
       handleClick={async () => {
         await axios.delete(`/api/note/${noteID}`);
-        router.push(`/?note=${userNotes[1].title}-${userNotes[1].id}`);
+        if (userNotes.length < 2) router.push("/");
+        else router.push(`/?note=${userNotes[1].title}-${userNotes[1].id}`);
+        router.refresh();
       }}
     />
   );
