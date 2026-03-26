@@ -67,7 +67,7 @@ const page = async ({ params, searchParams }: Props) => {
           tagSlug={tag}
         />
         <div className="hidden lg:block pl-4 py-5 space-y-3">
-          <ArchiveNote userNotes={userNotes} />
+          <ArchiveNote userNotes={userNotes} archive={true} />
           <DeleteNote userNotes={userNotes} />
         </div>
       </div>

@@ -45,6 +45,7 @@ async function Archive({ searchParams }: Props) {
             name="Restore Note"
             imageUrl="/images/icon-restore.svg"
             userNotes={userNotes}
+            archive={false}
           />
           <DeleteNote userNotes={userNotes} />
         </div>
