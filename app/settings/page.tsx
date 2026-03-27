@@ -1,7 +1,7 @@
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { redirect } from "next/navigation";
-import React from "react";
+import SettingsNav from "./components/SettingsNav";
 
 const Settings = async () => {
   const session = await auth();
@@ -13,7 +13,12 @@ const Settings = async () => {
       id: session.user?.id,
     },
   });
-  return <div>{user?.email}</div>;
+  return (
+    <div className="flex gap-3">
+      <SettingsNav />
+      <div className="lg:block hidden">{user?.email}</div>
+    </div>
+  );
 };
 
 export default Settings;

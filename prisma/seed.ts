@@ -4,7 +4,7 @@ import data from "../data.json";
 
 async function main() {
   const user = await prisma.user.findFirst({
-    where: { id: "cmn3vf2su0000s0j20zluxp5p" },
+    where: { id: "cmmy78v480000kgj2vwc52ffs" },
   });
   if (!user) throw new Error("No user found — log in first to create one");
 
