@@ -21,11 +21,11 @@ const SettingsNav = () => {
     {
       name: "Change Password",
       href: "?tab=change-password",
-      icon: "/images/icon-sun.svg",
+      icon: "/images/icon-lock.svg",
     },
   ];
   return (
-    <div className="min-h-[calc(100vh-var(--navheader-height))] lg:border-r border-neutral-200 pl-8 py-5 pr-4 w-full lg:w-70">
+    <div>
       <h1 className="text-neutral-950 text-2xl font-bold lg:hidden mb-3 ">
         Settings
       </h1>
@@ -38,7 +38,7 @@ const SettingsNav = () => {
             showChevron={true}
           />
         ))}
-        <li className="border-t pt-3 border-neutral-200 w-full">
+        <li className="lg:px-4 border-t pt-3 border-neutral-200 w-full">
           <button onClick={() => signOut({ callbackUrl: "/" })}>
             <div className="flex gap-x-2 items-center">
               <Image

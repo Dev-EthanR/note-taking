@@ -13,7 +13,7 @@ const SettingNavItem = ({ linkItem, isActive, showChevron }: Props) => {
     <Link
       href={linkItem.href}
       className={clsx(
-        "flex items-center  py-0.5 lg:px-3 w-full rounded-sm",
+        "flex items-center justify-between  py-2 lg:px-3 w-full rounded-sm",
         isActive && "lg:bg-neutral-100",
       )}
     >

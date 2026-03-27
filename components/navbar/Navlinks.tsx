@@ -7,7 +7,6 @@ import NavTags from "./NavTags";
 
 const NavLinks = ({ tags }: { tags: string[] }) => {
   const pathname = usePathname();
-  console.log(tags.length);
   return (
     <>
       <nav className="fixed bottom-0 w-full lg:hidden">

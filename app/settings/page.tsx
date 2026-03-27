@@ -2,21 +2,45 @@ import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { redirect } from "next/navigation";
 import SettingsNav from "./components/SettingsNav";
+import ColorTheme from "./components/ColorTheme";
+import clsx from "clsx";
+import FontTheme from "./components/FontTheme";
 
-const Settings = async () => {
+interface Props {
+  searchParams: Promise<{ tab?: string }>;
+}
+
+const Settings = async ({ searchParams }: Props) => {
   const session = await auth();
-
   if (!session) return redirect("/auth/login");
 
-  const user = await prisma.user.findUnique({
+  const tab = await searchParams;
+
+  const user = await prisma.settings.findUnique({
     where: {
-      id: session.user?.id,
+      userId: session.user?.id,
     },
   });
+
   return (
     <div className="flex gap-3">
-      <SettingsNav />
-      <div className="lg:block hidden">{user?.email}</div>
+      <div
+        className={clsx(
+          "min-h-[calc(100vh-var(--navheader-height))] lg:border-r border-neutral-200 pl-8 py-5 pr-4 w-full lg:w-70",
+          tab.tab && "hidden lg:block",
+        )}
+      >
+        <SettingsNav />
+      </div>
+      <div
+        className={clsx(
+          "py-6 px-4 w-full max-w-137.5",
+          !tab.tab && "hidden lg:block",
+        )}
+      >
+        {tab.tab === "color-theme" && <ColorTheme currentTheme={user?.theme} />}
+        {tab.tab === "font-theme" && <FontTheme currentFont={user?.font} />}
+      </div>
     </div>
   );
 };

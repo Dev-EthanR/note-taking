@@ -4,6 +4,10 @@ import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
 import { Geist, Inter, Noto_Serif, Source_Code_Pro } from "next/font/google";
 import "./globals.css";
+import { auth } from "@/lib/auth";
+import { prisma } from "@/lib/prisma";
+import clsx from "clsx";
+import Providers from "@/components/ThemeProvider";
 
 const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -27,17 +31,29 @@ export const metadata: Metadata = {
   description: "note taking application",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await auth();
+  let user;
+  if (session) {
+    user = await prisma.settings.findUnique({
+      where: {
+        userId: session.user?.id,
+      },
+    });
+  }
+
   return (
-    <html lang="en" className={cn("font-sans", geist.variable)}>
+    <html lang="en" className={cn(geist.variable)}>
       <body
-        className={`${inter.variable} ${notoSerif.variable} ${sourceCodePro.variable} antialiased  `}
+        className={`${inter.variable} ${notoSerif.variable} ${sourceCodePro.variable} antialiased ${user?.theme === "Dark" && "dark"}`}
       >
-        <AppShell navbar={<Navbar />}>{children}</AppShell>
+        <AppShell user={user} navbar={<Navbar />}>
+          {children}
+        </AppShell>
       </body>
     </html>
   );

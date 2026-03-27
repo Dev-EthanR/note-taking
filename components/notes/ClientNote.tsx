@@ -51,6 +51,11 @@ const ClientNote = ({
           <CreateNoteButton
             style={isNoteActive ? "invisible lg:visible" : "visible"}
           />
+          {!isNoteActive && page !== "/tags/" && (
+            <h1 className="text-neutral-950 text-2xl font-bold lg:hidden">
+              {page === "/archived" ? "Archived Notes" : "All Notes"}
+            </h1>
+          )}
           {page === "/archived" && (
             <p
               className={clsx(
@@ -62,27 +67,24 @@ const ClientNote = ({
               them anytime.
             </p>
           )}
-          {!isNoteActive && page !== "/tags/" && (
-            <h1 className="text-neutral-950 text-2xl font-bold lg:hidden">
-              {page === "/archived" ? "Archived Notes" : "All Notes"}
-            </h1>
+          {!isNoteActive && (
+            <div className="p-2 space-y-2 border border-neutral-200 rounded-md cursor-pointer w-full bg-neutral-100 lg:max-w-62.5">
+              {page === "/archived" ? (
+                <p className="text-sm text-neutral-950">
+                  No notes have been archived yet. Move notes here for
+                  safekeeping, or{" "}
+                  <Link href="?note=create" className="underline">
+                    create a new note.
+                  </Link>
+                </p>
+              ) : (
+                <p className="text-sm text-neutral-950">
+                  You don’t have any notes yet. Start a new note to capture your
+                  thoughts and ideas.
+                </p>
+              )}
+            </div>
           )}
-          <div className="p-2 space-y-2 border border-neutral-200 rounded-md cursor-pointer w-full bg-neutral-100 lg:max-w-62.5">
-            {page === "/archived" ? (
-              <p className="text-sm text-neutral-950">
-                No notes have been archived yet. Move notes here for
-                safekeeping, or{" "}
-                <Link href="?note=create" className="underline">
-                  create a new note.
-                </Link>
-              </p>
-            ) : (
-              <p className="text-sm text-neutral-950">
-                You don’t have any notes yet. Start a new note to capture your
-                thoughts and ideas.
-              </p>
-            )}
-          </div>
         </div>
         {isNoteActive && (
           <div className="pt-5 pr-6 md:pr-12 lg:px-6 lg:border-r lg:border-neutral-300 min-h-[calc(100vh-var(--navheader-height))] lg:w-137.5 grow">

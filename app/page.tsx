@@ -13,7 +13,6 @@ interface Props {
 export default async function Home({ searchParams }: Props) {
   const session = await auth();
   const note = await searchParams;
-
   if (!session) redirect("/auth/login");
 
   const userNotes = await prisma.note.findMany({
