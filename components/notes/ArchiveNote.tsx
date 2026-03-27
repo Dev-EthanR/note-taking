@@ -23,6 +23,7 @@ const ArchiveNote = ({
   const router = useRouter();
   return (
     <NoteAction
+      actionType={archive ? "archive" : "restore"}
       name={name}
       imageUrl={imageUrl}
       handleClick={async () => {

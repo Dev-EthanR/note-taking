@@ -144,6 +144,7 @@ const CreateNote = ({ setTitle, userNotes }: Props) => {
             <Button
               variant="link_button"
               className="text-neutral-600 lg:bg-neutral-100 lg:hover:bg-neutral-200"
+              size="xl"
             >
               Cancel
             </Button>
@@ -152,6 +153,7 @@ const CreateNote = ({ setTitle, userNotes }: Props) => {
             variant="link_button"
             className="text-primary-500 lg:bg-primary-500 lg:text-white lg:hover:bg-primary-700"
             type="submit"
+            size="xl"
           >
             Save Note
           </Button>

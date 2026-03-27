@@ -17,12 +17,12 @@ const buttonVariants = cva(
         ghost:
           "hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50",
         destructive:
-          "bg-destructive/10 text-destructive hover:bg-destructive/20 focus-visible:border-destructive/40 focus-visible:ring-destructive/20 dark:bg-destructive/20 dark:hover:bg-destructive/30 dark:focus-visible:ring-destructive/40",
+          "bg-accent-500 text-white hover:bg-accent-500/80 focus-visible:border-destructive/40 focus-visible:ring-destructive/20 dark:bg-destructive/20 dark:hover:bg-destructive/30 dark:focus-visible:ring-destructive/40",
         link: "text-primary underline-offset-4 hover:underline",
         primary:
-          "text-white bg-primary-500 rounded-lg py-3 px-4 text-base font-semibold tracking-[-0.3px]  hover:bg-primary-700 focus-visible:ring-neutral-500 ring-offset-2",
+          "text-white bg-primary-500 rounded-lg py-3 px-4 text-sm font-medium tracking-[-0.3px]  hover:bg-primary-700 focus-visible:ring-neutral-500 ring-offset-2",
         link_button:
-          "underline-offset-4 hover:underline lg:hover:no-underline rounded-lg lg:py-3 lg:px-4 text-sm font-medium tracking-[-0.3px] focus-visible:ring-neutral-500 ring-offset-2",
+          "underline-offset-4 hover:underline lg:hover:no-underline lg:hover:bg-neutral-200 rounded-lg lg:py-3 lg:px-4 text-sm font-medium tracking-[-0.3px] focus-visible:ring-neutral-500 ring-offset-2",
       },
       size: {
         default:

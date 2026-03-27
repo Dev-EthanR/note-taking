@@ -15,6 +15,7 @@ const DeleteNote = ({ userNotes }: Props) => {
   const router = useRouter();
   return (
     <NoteAction
+      actionType="delete"
       name="Delete Note"
       imageUrl="/images/icon-delete.svg"
       handleClick={async () => {

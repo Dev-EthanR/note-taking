@@ -14,7 +14,7 @@ const CreateNoteButton = ({ style }: Props) => {
     <Button
       variant="primary"
       className={cn(
-        "size-12 md:size-16 rounded-full lg:rounded-2xl lg:w-60.5 lg:h-10.25 absolute bottom-20 right-5 md:bottom-25 md:right-10 lg:static flex items-center",
+        "size-12 md:size-16 rounded-full lg:rounded-2xl lg:w-60.5 lg:h-10.25 absolute bottom-20 right-5 md:bottom-25 md:right-10 lg:static flex items-center lg:text-base lg:font-semibold",
         style,
       )}
       onClick={() => {
