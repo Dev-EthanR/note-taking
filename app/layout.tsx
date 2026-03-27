@@ -1,13 +1,11 @@
 import AppShell from "@/components/AppShell";
 import Navbar from "@/components/navbar/Navbar";
+import { auth } from "@/lib/auth";
+import { prisma } from "@/lib/prisma";
 import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
 import { Geist, Inter, Noto_Serif, Source_Code_Pro } from "next/font/google";
 import "./globals.css";
-import { auth } from "@/lib/auth";
-import { prisma } from "@/lib/prisma";
-import clsx from "clsx";
-import Providers from "@/components/ThemeProvider";
 
 const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 
