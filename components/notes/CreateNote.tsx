@@ -76,7 +76,7 @@ const CreateNote = ({ setTitle }: Props) => {
     : null;
 
   async function onSubmit(formData: Note) {
-    const title = formData.title;
+    const title = formData.title || "Untitled Note";
     const tags = formData.tags
       ?.split(",")
       .map((tag) => tag.trim())
