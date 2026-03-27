@@ -1,10 +1,8 @@
 "use client";
-import Image from "next/image";
-import { Button } from "../ui/button";
-import { useSearchParams } from "next/navigation";
 import clsx from "clsx";
-import { auth } from "@/lib/auth";
-import { prisma } from "@/lib/prisma";
+import Image from "next/image";
+import { useSearchParams } from "next/navigation";
+import { Button } from "../ui/button";
 
 interface Props {
   name: string;
@@ -21,12 +19,12 @@ const NoteAction = ({ name, imageUrl, handleClick }: Props) => {
       variant="outline"
       onClick={handleClick}
       className={clsx(
-        "px-4 py-3 min-w-36.25 w-full 2xl:w-60.5 h-11 text-sm text-neutral-950 flex justify-start items-center ",
+        "w-9 h-9 lg:px-4 lg:py-3 lg:min-w-36.25 lg:w-full 2xl:w-60.5 lg:h-11 text-sm text-neutral-950 flex justify-center items-center border-0 lg:border lg:justify-start",
         noteStatusParam === "create" && "invisible",
       )}
     >
       <Image src={imageUrl} alt="" width={20} height={20} />
-      <span>{name}</span>
+      <span className="hidden lg:block">{name}</span>
     </Button>
   );
 };

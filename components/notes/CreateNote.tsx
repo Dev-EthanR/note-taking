@@ -10,6 +10,8 @@ import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { Note as dbNote } from "@/generated/prisma/client";
+import ArchiveNote from "./ArchiveNote";
+import DeleteNote from "./DeleteNote";
 
 interface Note {
   title?: string;
@@ -19,9 +21,10 @@ interface Note {
 
 interface Props {
   setTitle: (title: string) => void;
+  userNotes: dbNote[];
 }
 
-const CreateNote = ({ setTitle }: Props) => {
+const CreateNote = ({ setTitle, userNotes }: Props) => {
   const [noteData, setNoteData] = useState<dbNote | null>();
   const searchParams = useSearchParams();
   const pathname = usePathname();
@@ -120,7 +123,23 @@ const CreateNote = ({ setTitle }: Props) => {
           />
           Go Back
         </Link>
-        <div className="lg:flex flex-row-reverse gap-2">
+        <div className="flex lg:gap-2 items-center lg:flex-row-reverse">
+          <span className="lg:hidden">
+            <DeleteNote userNotes={userNotes} />
+          </span>
+          {pathname === "/archived" ? (
+            <span className="lg:hidden">
+              <ArchiveNote
+                archive={false}
+                userNotes={userNotes}
+                imageUrl="/images/icon-restore.svg"
+              />
+            </span>
+          ) : (
+            <span className="lg:hidden">
+              <ArchiveNote archive={true} userNotes={userNotes} />
+            </span>
+          )}
           <Link href={pathname}>
             <Button
               variant="link_button"
@@ -145,6 +164,13 @@ const CreateNote = ({ setTitle }: Props) => {
           className="border-none outline-0 text-neutral-950 text-2xl font-bold placeholder:text-neutral-950 resize-none"
           {...register("title")}
           aria-label="title"
+          rows={1}
+          style={{ height: "auto" }}
+          onInput={(e) => {
+            const element = e.currentTarget;
+            element.style.height = "auto";
+            element.style.height = element.scrollHeight + "px";
+          }}
         />
         <div className="min-w-0 grid grid-cols-[115px_minmax(220px,1fr)] gap-y-2 md:grid-cols-[115px_minmax(0,1fr)] border-b-2 pb-4 mb-4 border-b-neutral-200">
           <CreateNoteHeader icon="/images/icon-tag.svg" title="Tags">
@@ -155,6 +181,13 @@ const CreateNote = ({ setTitle }: Props) => {
               wrap="hard"
               {...register("tags")}
               aria-label="tags"
+              style={{ height: "auto" }}
+              onInput={(e) => {
+                const element = e.currentTarget;
+                element.style.height = "auto";
+                element.style.height = element.scrollHeight + "px";
+              }}
+              rows={1}
             />
           </CreateNoteHeader>
           {noteData?.status && (

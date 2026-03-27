@@ -86,7 +86,7 @@ const ClientNote = ({
         </div>
         {isNoteActive && (
           <div className="pt-5 pr-6 md:pr-12 lg:px-6 lg:border-r lg:border-neutral-300 min-h-[calc(100vh-var(--navheader-height))] lg:w-137.5 grow">
-            <CreateNote setTitle={setNewTitle} />
+            <CreateNote setTitle={setNewTitle} userNotes={userNotes} />
           </div>
         )}
       </>
@@ -154,7 +154,7 @@ const ClientNote = ({
       </div>
       {isNoteActive && (
         <div className="pt-5 pr-6 md:pr-12 lg:px-6 lg:border-r lg:border-neutral-300 min-h-[calc(100vh-var(--navheader-height))] lg:w-137.5 grow">
-          <CreateNote setTitle={setNewTitle} />
+          <CreateNote setTitle={setNewTitle} userNotes={userNotes} />
         </div>
       )}
     </>
