@@ -20,7 +20,7 @@ function AppShell({ children, navbar, user }: Props) {
   return (
     <main
       className={clsx(
-        "dark:bg-neutral-700 lg:flex",
+        "dark:bg-neutral-950 lg:flex",
         user?.font === "Monospace" && "font-mono",
         user?.font === "Serif" && "font-serif",
         user?.font === "Sans" && "font-sans",

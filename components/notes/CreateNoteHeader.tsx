@@ -9,9 +9,15 @@ interface Props extends PropsWithChildren {
 const CreateNoteHeader = ({ icon, title, children }: Props) => {
   return (
     <>
-      <div className="flex md:block text-neutral-700 text-xs md:text-sm">
+      <div className="flex md:block text-neutral-700 dark:text-neutral-300 text-xs md:text-sm">
         <div className="flex items-center  gap-1">
-          <Image src={icon} alt="" width={16} height={16} />
+          <Image
+            src={icon}
+            alt=""
+            width={16}
+            height={16}
+            className="dark:invert"
+          />
           <span>{title}</span>
         </div>
       </div>

@@ -26,7 +26,7 @@ const SettingsNav = () => {
   ];
   return (
     <div>
-      <h1 className="text-neutral-950 text-2xl font-bold lg:hidden mb-3 ">
+      <h1 className="text-neutral-950 dark:text-white text-2xl font-bold lg:hidden mb-3 ">
         Settings
       </h1>
       <ul className="flex flex-col gap-3 ">
@@ -38,7 +38,7 @@ const SettingsNav = () => {
             showChevron={true}
           />
         ))}
-        <li className="lg:px-4 border-t pt-3 border-neutral-200 w-full">
+        <li className="lg:px-4 border-t pt-3 border-neutral-200 dark:border-neutral-800 w-full">
           <button onClick={() => signOut({ callbackUrl: "/" })}>
             <div className="flex gap-x-2 items-center">
               <Image
@@ -46,6 +46,7 @@ const SettingsNav = () => {
                 alt=""
                 width={24}
                 height={24}
+                className="dark:invert"
               />
               <span>Logout</span>
             </div>

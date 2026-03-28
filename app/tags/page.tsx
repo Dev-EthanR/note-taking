@@ -18,7 +18,7 @@ const Tags = async () => {
 
   return (
     <div className="px-8 py-6">
-      <h1 className="text-neutral-950 text-2xl font-bold lg:hidden mb-3">
+      <h1 className="text-neutral-950 dark:text-white text-2xl font-bold lg:hidden mb-3">
         Tags
       </h1>
       <NavTags tags={uniqueTags} />

@@ -49,19 +49,22 @@ const ClientNote = ({
   if (userNotes.length < 1) {
     return (
       <>
-        <div className="w-full lg:border-r lg:border-neutral-300 px-3 py-5 md:px-8 md:py-6 lg:pt-5 lg:pl-0 lg:pr-4 min-h-[calc(100vh-var(--navheader-height))] space-y-2 lg:w-fit lg:max-w-90">
+        <div
+          className="w-full lg:border-r lg:border-neutral-300 dark:lg:border-neutral-800
+         px-3 py-5 md:px-8 md:py-6 lg:pt-5 lg:pl-0 lg:pr-4 min-h-[calc(100vh-var(--navheader-height))] space-y-2 lg:w-fit lg:max-w-90"
+        >
           <CreateNoteButton
             style={isNoteActive ? "invisible lg:visible" : "visible"}
           />
           {!isNoteActive && page !== "/tags/" && (
-            <h1 className="text-neutral-950 text-2xl font-bold lg:hidden">
+            <h1 className="text-neutral-950 dark:text-white text-2xl font-bold lg:hidden">
               {page === "/archived" ? "Archived Notes" : "All Notes"}
             </h1>
           )}
           {page === "/archived" && (
             <p
               className={clsx(
-                "text-sm w-full lg:max-w-60 text-neutral-700",
+                "text-sm w-full lg:max-w-60 text-neutral-700 dark:text-white",
                 isNoteActive ? "hidden lg:block" : "block",
               )}
             >
@@ -70,9 +73,9 @@ const ClientNote = ({
             </p>
           )}
           {!isNoteActive && (
-            <div className="p-2 space-y-2 border border-neutral-200 rounded-md cursor-pointer w-full bg-neutral-100 lg:max-w-62.5">
+            <div className="p-2 space-y-2 border border-neutral-200 dark:border-neutral-800 rounded-md cursor-pointer w-full bg-neutral-100 dark:bg-neutral-800 lg:max-w-62.5">
               {page === "/archived" ? (
-                <p className="text-sm text-neutral-950">
+                <p className="text-sm text-neutral-950 dark:text-white">
                   No notes have been archived yet. Move notes here for
                   safekeeping, or{" "}
                   <Link href="?note=create" className="underline">
@@ -80,7 +83,7 @@ const ClientNote = ({
                   </Link>
                 </p>
               ) : (
-                <p className="text-sm text-neutral-950">
+                <p className="text-sm text-neutral-950 dark:text-white">
                   You don’t have any notes yet. Start a new note to capture your
                   thoughts and ideas.
                 </p>
@@ -89,7 +92,7 @@ const ClientNote = ({
           )}
         </div>
         {isNoteActive && (
-          <div className="pt-5 pr-6 md:pr-12 lg:px-6 lg:border-r lg:border-neutral-300 min-h-[calc(100vh-var(--navheader-height))] lg:w-137.5 grow">
+          <div className="pt-5 pr-6 md:pr-12 lg:px-6 lg:border-r lg:border-neutral-300 dark:lg:border-neutral-800 min-h-[calc(100vh-var(--navheader-height))] lg:w-137.5 grow">
             <Suspense fallback={<CreateNoteLoading />}>
               <CreateNote setTitle={setNewTitle} userNotes={userNotes} />
             </Suspense>

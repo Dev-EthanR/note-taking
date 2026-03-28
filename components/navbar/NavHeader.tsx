@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import Image from "next/image";
 
 type Screen = "desktop" | "mobile";
@@ -9,7 +10,10 @@ interface Props {
 const NavHeader = ({ screen }: Props) => {
   return (
     <header
-      className={`px-4 py-3 bg-neutral-100 lg:bg-transparent ${screen === "mobile" ? "lg:hidden" : "hidden lg:block"}`}
+      className={clsx(
+        `px-4 py-3 bg-neutral-100 dark:bg-neutral-800 dark:lg:bg-transparent lg:bg-transparent`,
+        screen === "mobile" ? "lg:hidden" : "hidden lg:block",
+      )}
     >
       <Image
         className="w-23.75 h-7 dark:hidden"

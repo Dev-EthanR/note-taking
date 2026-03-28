@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { NavLink } from "./navlink";
+import clsx from "clsx";
 
 interface Props {
   linkItem: NavLink;
@@ -11,7 +12,11 @@ const NavItem = ({ linkItem, isActive, showChevron }: Props) => {
   return (
     <Link
       href={linkItem.href}
-      className={`flex items-center justify-center py-1 lg:justify-between lg:py-2.5 lg:px-3 w-17 md:w-20 lg:w-full ${isActive && "bg-primary-50 text-primary-500 lg:text-neutral-950 lg:font-medium"} rounded-sm`}
+      className={clsx(
+        `flex items-center justify-center py-1 lg:justify-between lg:py-2.5 lg:px-3 w-17 md:w-20 lg:w-full rounded-sm`,
+        isActive &&
+          "bg-primary-50 dark:bg-neutral-800 text-primary-500 dark:lg:text-white lg:text-neutral-950 lg:font-medium",
+      )}
     >
       <div className="flex flex-col lg:flex-row gap-x-2 items-center">
         <Image
@@ -19,7 +24,7 @@ const NavItem = ({ linkItem, isActive, showChevron }: Props) => {
           alt={linkItem.name}
           width={24}
           height={24}
-          className={isActive ? "filter-primary" : ""}
+          className={isActive ? "filter-primary" : "dark:invert"}
         />
         <span className="hidden md:block lg:hidden">{linkItem.name}</span>
         <span className="hidden lg:block lg:text-sm">
@@ -32,6 +37,7 @@ const NavItem = ({ linkItem, isActive, showChevron }: Props) => {
           alt=""
           width={20}
           height={20}
+          className="dark:invert"
         />
       )}
     </Link>

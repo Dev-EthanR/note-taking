@@ -14,11 +14,17 @@ const SettingNavItem = ({ linkItem, isActive, showChevron }: Props) => {
       href={linkItem.href}
       className={clsx(
         "flex items-center justify-between  py-2 lg:px-3 w-full rounded-sm",
-        isActive && "lg:bg-neutral-100",
+        isActive && "lg:bg-neutral-100 dark:lg:bg-neutral-800",
       )}
     >
       <div className="flex gap-x-2 items-center">
-        <Image src={linkItem.icon} alt={linkItem.name} width={24} height={24} />
+        <Image
+          src={linkItem.icon}
+          alt={linkItem.name}
+          width={24}
+          height={24}
+          className="dark:invert"
+        />
         <span>{linkItem.name}</span>
       </div>
       {showChevron && isActive && (
@@ -27,6 +33,7 @@ const SettingNavItem = ({ linkItem, isActive, showChevron }: Props) => {
           alt=""
           width={20}
           height={20}
+          className="dark:invert"
         />
       )}
     </Link>

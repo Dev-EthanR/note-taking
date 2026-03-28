@@ -32,12 +32,18 @@ const NoteAction = ({ name, imageUrl, handleClick, actionType }: Props) => {
       <Button
         variant="outline"
         className={clsx(
-          "w-9 h-9 lg:px-4 lg:py-3 lg:min-w-36.25 lg:w-full 2xl:w-60.5 lg:h-11 text-sm text-neutral-950 flex justify-center items-center border-0 lg:border lg:justify-start",
+          "w-9 h-9 lg:px-4 lg:py-3 lg:min-w-36.25 lg:w-full 2xl:w-60.5 lg:h-11 text-sm text-neutral-950 dark:text-white flex justify-center items-center border-0 lg:border lg:justify-start",
           noteStatusParam === "create" && "invisible",
         )}
         onClick={handleClick}
       >
-        <Image src={imageUrl} alt="" width={20} height={20} />
+        <Image
+          src={imageUrl}
+          alt=""
+          width={20}
+          height={20}
+          className="dark:invert"
+        />
         <span className="hidden lg:block">{name}</span>
       </Button>
     );
@@ -49,27 +55,33 @@ const NoteAction = ({ name, imageUrl, handleClick, actionType }: Props) => {
         <Button
           variant="outline"
           className={clsx(
-            "w-9 h-9 lg:px-4 lg:py-3 lg:min-w-36.25 lg:w-full 2xl:w-60.5 lg:h-11 text-sm text-neutral-950 flex justify-center items-center border-0 lg:border lg:justify-start",
+            "w-9 h-9 lg:px-4 lg:py-3 lg:min-w-36.25 lg:w-full 2xl:w-60.5 lg:h-11 text-sm text-neutral-950 dark:text-white flex justify-center items-center border-0 lg:border lg:justify-start",
             noteStatusParam === "create" && "invisible",
           )}
         >
-          <Image src={imageUrl} alt="" width={20} height={20} />
+          <Image
+            src={imageUrl}
+            alt=""
+            width={20}
+            height={20}
+            className="dark:invert"
+          />
           <span className="hidden lg:block">{name}</span>
         </Button>
       </AlertDialogTrigger>
-      <AlertDialogContent>
-        <AlertDialogHeader className="flex gap-3 font-[system-ui]">
-          <span className="bg-neutral-100 min-w-10 h-10 rounded-sm flex justify-center items-center">
+      <AlertDialogContent className="dark:bg-neutral-800 dark:border-neutral-500 dark:border ">
+        <AlertDialogHeader className="flex gap-3 font-[system-ui] ">
+          <span className="bg-neutral-100 dark:bg-neutral-500 min-w-10 h-10 rounded-sm flex justify-center items-center">
             <Image
               src={imageUrl}
               alt=""
               width={24}
               height={24}
-              className="w-6"
+              className="w-6 dark:invert"
             />
           </span>
           <div>
-            <AlertDialogTitle className="text-neutral-950">
+            <AlertDialogTitle className="text-neutral-950 dark:text-white">
               {name}
             </AlertDialogTitle>
 
@@ -87,11 +99,11 @@ const NoteAction = ({ name, imageUrl, handleClick, actionType }: Props) => {
             )}
           </div>
         </AlertDialogHeader>
-        <AlertDialogFooter className="font-[system-ui] bg-white">
+        <AlertDialogFooter className="font-[system-ui] bg-white dark:bg-neutral-800 dark:border-t-neutral-500">
           <AlertDialogCancel
             variant="link_button"
             size="lg"
-            className="bg-neutral-100"
+            className="bg-neutral-100 dark:bg-neutral-500 hover:bg-neutral-200 dark:hover:bg-neutral-400"
           >
             Cancel
           </AlertDialogCancel>

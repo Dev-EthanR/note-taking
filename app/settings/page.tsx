@@ -26,7 +26,7 @@ const Settings = async ({ searchParams }: Props) => {
     <div className="flex gap-3">
       <div
         className={clsx(
-          "min-h-[calc(100vh-var(--navheader-height))] lg:border-r border-neutral-200 pl-8 py-5 pr-4 w-full lg:w-70",
+          "min-h-[calc(100vh-var(--navheader-height))] lg:border-r border-neutral-200 dark:border-neutral-800 pl-8 py-5 pr-4 w-full lg:w-70",
           tab.tab && "hidden lg:block",
         )}
       >

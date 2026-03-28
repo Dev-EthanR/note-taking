@@ -14,8 +14,8 @@ const TopBar = () => {
     title = pathname.split("/")[2];
   }
   return (
-    <div className="w-full hidden lg:flex justify-between items-center  px-8 h-(--navheader-height) lg:border-b lg:border-neutral-300">
-      <span className="text-neutral-950 text-2xl font-bold">
+    <div className="w-full hidden lg:flex justify-between items-center  px-8 h-(--navheader-height) lg:border-b lg:border-neutral-300 dark:lg:border-neutral-800">
+      <span className="text-neutral-950 dark:text-white text-2xl font-bold">
         {isTagsPage && <span className="text-neutral-600">Notes Tagged: </span>}
         {title}
       </span>
@@ -27,6 +27,7 @@ const TopBar = () => {
             alt="settings"
             width={24}
             height={24}
+            className={"dark:invert"}
           />
         </Link>
       </div>

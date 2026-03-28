@@ -39,28 +39,30 @@ const PreviewNote = ({
   return (
     <div
       className={clsx(
-        "p-2 space-y-2 border-b border-neutral-200 rounded-md cursor-pointer w-full",
-        isActive && "lg:bg-neutral-100",
+        "p-2 space-y-2 border-b border-neutral-200 dark:border-neutral-800 rounded-md cursor-pointer w-full",
+        isActive && "lg:bg-neutral-100 dark:lg:bg-neutral-800 ",
       )}
       role="button"
       tabIndex={0}
       onKeyDown={(e) => e.key === "Enter" && handleClick()}
       onClick={handleClick}
     >
-      <h3 className="text-neutral-950 font-semibold">
+      <h3 className="text-neutral-950 font-semibold dark:text-white">
         {checkString(title as string, 31)}
       </h3>
       <div className="space-x-3">
         {note?.tags.map((tag) => (
           <span
             key={tag}
-            className="bg-neutral-200 px-1.5 py-0.5 rounded-sm w-11 h-4.5  text-xs"
+            className="bg-neutral-200 dark:bg-neutral-600 px-1.5 py-0.5 rounded-sm w-11 h-4.5  text-xs"
           >
             {tag}
           </span>
         ))}
       </div>
-      <p className="text-neutral-700 text-xs">{formattedDate}</p>
+      <p className="text-neutral-700 dark:text-neutral-300 text-xs">
+        {formattedDate}
+      </p>
     </div>
   );
 };

@@ -17,7 +17,7 @@ const Navbar = async () => {
 
   return (
     <>
-      <div className="lg:border-r lg:border-neutral-300  lg:min-w-58 2xl:min-w-68 lg:min-h-screen 2xl:px-3  lg:py-3 lg:gap-y-4">
+      <div className="lg:border-r lg:border-neutral-300 dark:border-neutral-800 lg:min-w-58 2xl:min-w-68 lg:min-h-screen 2xl:px-3  lg:py-3 lg:gap-y-4">
         <NavHeader screen="desktop" />
         <NavLinks tags={uniqueTags} />
       </div>

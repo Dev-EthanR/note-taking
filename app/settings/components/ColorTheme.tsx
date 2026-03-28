@@ -45,8 +45,12 @@ const ColorTheme = ({ currentTheme }: { currentTheme: string | undefined }) => {
   }
   return (
     <div>
-      <h2 className="text-neutral-950 font-bold">Color Theme</h2>
-      <p className="text-neutral-950 mb-7">Choose your Color Theme</p>
+      <h2 className="text-neutral-950 font-bold dark:text-white">
+        Color Theme
+      </h2>
+      <p className="text-neutral-950 dark:text-neutral-300 mb-7">
+        Choose your Color Theme
+      </p>
       <form className="flex flex-col gap-4" action={onSubmit}>
         <RadioGroup
           defaultValue={currentTheme || "Light"}
@@ -57,14 +61,20 @@ const ColorTheme = ({ currentTheme }: { currentTheme: string | undefined }) => {
             <FieldLabel htmlFor={item.id} key={item.id}>
               <Field orientation="horizontal">
                 <FieldContent>
-                  <span className="bg-white min-w-10 h-10 rounded-xl flex justify-center items-center border border-neutral-200">
-                    <Image src={item.imageSrc} alt="" width={24} height={24} />
+                  <span className="bg-white dark:bg-neutral-950 min-w-10 h-10 rounded-xl flex justify-center items-center border border-neutral-200 dark:border-neutral-700">
+                    <Image
+                      src={item.imageSrc}
+                      alt=""
+                      width={24}
+                      height={24}
+                      className="dark:invert"
+                    />
                   </span>
                   <div>
-                    <FieldTitle className="text-neutral-950 ">
+                    <FieldTitle className="text-neutral-950 dark:text-white">
                       {item.title}
                     </FieldTitle>
-                    <FieldDescription className="text-neutral-700 text-xs lg:text-sm">
+                    <FieldDescription className="text-neutral-700 text-xs lg:text-sm dark:text-neutral-400">
                       {item.description}
                     </FieldDescription>
                   </div>

@@ -38,7 +38,7 @@ const page = async ({ params, searchParams }: Props) => {
         <>
           <Link
             href={"/tags"}
-            className="flex items-center gap-1 text-neutral-600 text-sm lg:hidden pb-3 px-8"
+            className="flex items-center gap-1 text-neutral-600 dark:text-neutral-300 text-sm lg:hidden pb-3 px-8"
           >
             <Image
               src="/images/icon-arrow-left.svg"
@@ -48,8 +48,10 @@ const page = async ({ params, searchParams }: Props) => {
             />
             Go Back
           </Link>
-          <h1 className="text-neutral-950 text-2xl font-bold px-8 mb-3 lg:hidden">
-            <span className="text-neutral-600">Notes Tagged: </span>
+          <h1 className="text-neutral-950 dark:text-white text-2xl font-bold px-8 mb-3 lg:hidden">
+            <span className="text-neutral-600 dark:text-neutral-300">
+              Notes Tagged:{" "}
+            </span>
             {tag}
           </h1>
         </>

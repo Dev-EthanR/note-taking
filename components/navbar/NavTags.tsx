@@ -1,5 +1,6 @@
 "use client";
 import { checkString } from "@/utils/checkString";
+import clsx from "clsx";
 import Image from "next/image";
 import Link from "next/link";
 import { redirect, usePathname } from "next/navigation";
@@ -25,7 +26,11 @@ const NavTags = ({ tags }: Props) => {
         <li key={tag}>
           <Link
             href={`/tags/${tag}`}
-            className={`flex items-center justify-between py-2.5 px-3 border-b border-neutral-200 lg:border-none ${pathname === "/tags/" + tag && "bg-primary-50 text-neutral-950 font-medium"} rounded-sm  `}
+            className={clsx(
+              `flex items-center justify-between py-2.5 px-3 border-b border-neutral-200 dark:border-neutral-800 lg:border-none  rounded-sm  `,
+              pathname === "/tags/" + tag &&
+                "bg-primary-50 dark:bg-neutral-800 text-neutral-950 dark:text-white font-medium",
+            )}
           >
             <div className="flex gap-x-2 items-center">
               <Image
@@ -33,7 +38,7 @@ const NavTags = ({ tags }: Props) => {
                 alt={""}
                 width={24}
                 height={24}
-                className={`${pathname === "/tags/" + tag && "filter-primary"}`}
+                className={`${pathname === "/tags/" + tag ? "filter-primary" : "dark:invert"} `}
               />
               <span className="text-sm max-w-34.5 hidden lg:block">
                 {checkString(tag, 18)}
@@ -46,6 +51,7 @@ const NavTags = ({ tags }: Props) => {
                 alt=""
                 width={20}
                 height={20}
+                className="dark:invert"
               />
             )}
           </Link>

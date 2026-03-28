@@ -4,17 +4,21 @@ import { usePathname } from "next/navigation";
 import NavItem from "./NavItem";
 import { links } from "./navlink";
 import NavTags from "./NavTags";
+import clsx from "clsx";
 
 const NavLinks = ({ tags }: { tags: string[] }) => {
   const pathname = usePathname();
   return (
     <>
       <nav className="fixed bottom-0 w-full lg:hidden">
-        <ul className="flex px-4 py-3 justify-between lg:flex-col bg-white shadow-2xl shadow-neutral-700 border-t border-neutral-200">
+        <ul className="flex px-4 py-3 justify-between lg:flex-col bg-white dark:bg-neutral-950 shadow-2xl shadow-neutral-700 dark:shadow-neutral-600 border-t border-neutral-200 dark:border-neutral-800">
           {links.map((link) => (
             <li
               key={link.name}
-              className={`md:border-r  ${link.noBorder && "border-none"} flex flex-1 justify-center`}
+              className={clsx(
+                `md:border-r  flex flex-1 justify-center`,
+                link.noBorder && "border-none",
+              )}
             >
               <NavItem
                 linkItem={link}
@@ -35,7 +39,10 @@ const NavLinks = ({ tags }: { tags: string[] }) => {
             .map((link) => (
               <li
                 key={link.name}
-                className={`border-b-2 ${link.noBorder ? "border-none" : "pb-4"} `}
+                className={clsx(
+                  `border-b-2 dark:border-b-neutral-800 `,
+                  link.noBorder ? "border-none" : "pb-4",
+                )}
               >
                 <NavItem
                   linkItem={link}
@@ -45,7 +52,7 @@ const NavLinks = ({ tags }: { tags: string[] }) => {
               </li>
             ))}
           {tags.length !== 0 && (
-            <p className="text-neutral-500 text-sm px-2">Tags</p>
+            <p className="text-neutral-500  text-sm px-2">Tags</p>
           )}
           <NavTags tags={tags} />
         </ul>
