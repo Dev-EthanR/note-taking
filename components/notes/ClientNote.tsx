@@ -3,11 +3,13 @@
 import { Note } from "@/generated/prisma/client";
 import clsx from "clsx";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useLayoutEffect, useState } from "react";
+import { Suspense, useEffect, useLayoutEffect, useState } from "react";
 import CreateNote from "./CreateNote";
 import CreateNoteButton from "./CreateNoteButton";
 import PreviewNote from "./PreviewNote";
 import Link from "next/link";
+import { PreviewNoteLoading } from "./PreviewNoteLoading";
+import { CreateNoteLoading } from "./CreateNoteLoading";
 
 interface Props {
   isNoteActive?: string | undefined;
@@ -88,7 +90,9 @@ const ClientNote = ({
         </div>
         {isNoteActive && (
           <div className="pt-5 pr-6 md:pr-12 lg:px-6 lg:border-r lg:border-neutral-300 min-h-[calc(100vh-var(--navheader-height))] lg:w-137.5 grow">
-            <CreateNote setTitle={setNewTitle} userNotes={userNotes} />
+            <Suspense fallback={<CreateNoteLoading />}>
+              <CreateNote setTitle={setNewTitle} userNotes={userNotes} />
+            </Suspense>
           </div>
         )}
       </>
@@ -144,19 +148,22 @@ const ClientNote = ({
           )}
 
           {userNotes.map((note) => (
-            <PreviewNote
-              key={note.id}
-              updatedTitle={activeId === note.id ? newTitle : undefined}
-              note={note}
-              activeId={activeId}
-              noteParam={noteParam}
-            />
+            <Suspense key={note.id} fallback={<PreviewNoteLoading />}>
+              <PreviewNote
+                updatedTitle={activeId === note.id ? newTitle : undefined}
+                note={note}
+                activeId={activeId}
+                noteParam={noteParam}
+              />
+            </Suspense>
           ))}
         </div>
       </div>
       {isNoteActive && (
         <div className="pt-5 pr-6 md:pr-12 lg:px-6 lg:border-r lg:border-neutral-300 min-h-[calc(100vh-var(--navheader-height))] lg:w-137.5 grow">
-          <CreateNote setTitle={setNewTitle} userNotes={userNotes} />
+          <Suspense fallback={<CreateNoteLoading />}>
+            <CreateNote setTitle={setNewTitle} userNotes={userNotes} />
+          </Suspense>
         </div>
       )}
     </>
