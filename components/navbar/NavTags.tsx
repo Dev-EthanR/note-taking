@@ -38,7 +38,12 @@ const NavTags = ({ tags }: Props) => {
                 alt={""}
                 width={24}
                 height={24}
-                className={`${pathname === "/tags/" + tag ? "filter-primary" : "dark:invert"} `}
+                className={clsx(
+                  "select-none",
+                  pathname === "/tags/" + tag
+                    ? "filter-primary"
+                    : "dark:invert",
+                )}
               />
               <span className="text-sm max-w-34.5 hidden lg:block">
                 {checkString(tag, 18)}
@@ -51,7 +56,7 @@ const NavTags = ({ tags }: Props) => {
                 alt=""
                 width={20}
                 height={20}
-                className="dark:invert"
+                className="dark:invert select-none"
               />
             )}
           </Link>

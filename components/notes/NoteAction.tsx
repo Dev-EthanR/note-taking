@@ -42,7 +42,7 @@ const NoteAction = ({ name, imageUrl, handleClick, actionType }: Props) => {
           alt=""
           width={20}
           height={20}
-          className="dark:invert"
+          className="dark:invert select-none"
         />
         <span className="hidden lg:block">{name}</span>
       </Button>

@@ -24,7 +24,10 @@ const NavItem = ({ linkItem, isActive, showChevron }: Props) => {
           alt={linkItem.name}
           width={24}
           height={24}
-          className={isActive ? "filter-primary" : "dark:invert"}
+          className={clsx(
+            "select-none",
+            isActive ? "filter-primary" : "dark:invert",
+          )}
         />
         <span className="hidden md:block lg:hidden">{linkItem.name}</span>
         <span className="hidden lg:block lg:text-sm">
@@ -37,7 +40,7 @@ const NavItem = ({ linkItem, isActive, showChevron }: Props) => {
           alt=""
           width={20}
           height={20}
-          className="dark:invert"
+          className="dark:invert select-none"
         />
       )}
     </Link>

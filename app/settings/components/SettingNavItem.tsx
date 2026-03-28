@@ -33,7 +33,7 @@ const SettingNavItem = ({ linkItem, isActive, showChevron }: Props) => {
           alt=""
           width={20}
           height={20}
-          className="dark:invert"
+          className="dark:invert select-none"
         />
       )}
     </Link>

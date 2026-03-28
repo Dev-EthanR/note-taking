@@ -120,7 +120,7 @@ const CreateNote = ({ setTitle, userNotes }: Props) => {
             alt=""
             width={18}
             height={18}
-            className="dark:invert"
+            className="dark:invert select-none"
           />
           Go Back
         </Link>

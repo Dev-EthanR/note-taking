@@ -45,6 +45,7 @@ const page = async ({ params, searchParams }: Props) => {
               alt=""
               width={18}
               height={18}
+              className="dark:invert select-none"
             />
             Go Back
           </Link>

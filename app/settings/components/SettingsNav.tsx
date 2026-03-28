@@ -46,7 +46,7 @@ const SettingsNav = () => {
                 alt=""
                 width={24}
                 height={24}
-                className="dark:invert"
+                className="dark:invert select-none"
               />
               <span>Logout</span>
             </div>

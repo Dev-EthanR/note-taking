@@ -16,7 +16,7 @@ const CreateNoteHeader = ({ icon, title, children }: Props) => {
             alt=""
             width={16}
             height={16}
-            className="dark:invert"
+            className="dark:invert select-none"
           />
           <span>{title}</span>
         </div>

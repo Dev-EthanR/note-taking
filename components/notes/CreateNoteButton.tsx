@@ -22,7 +22,7 @@ const CreateNoteButton = ({ style }: Props) => {
       }}
     >
       <Image
-        className="invert lg:hidden"
+        className="invert lg:hidden select-none"
         src={"/images/icon-plus.svg"}
         alt="create a new note"
         width={32}

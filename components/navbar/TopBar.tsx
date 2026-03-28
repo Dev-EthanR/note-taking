@@ -27,7 +27,7 @@ const TopBar = () => {
             alt="settings"
             width={24}
             height={24}
-            className={"dark:invert"}
+            className={"dark:invert select-none"}
           />
         </Link>
       </div>
