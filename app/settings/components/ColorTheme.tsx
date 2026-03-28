@@ -1,17 +1,10 @@
 // refactor
 "use client";
 import { Button } from "@/components/ui/button";
-import {
-  Field,
-  FieldContent,
-  FieldDescription,
-  FieldLabel,
-  FieldTitle,
-} from "@/components/ui/field";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { RadioGroup } from "@/components/ui/radio-group";
 import axios from "axios";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
+import RadioInput from "./RadioInput";
 
 const ColorTheme = ({ currentTheme }: { currentTheme: string | undefined }) => {
   const groups = [
@@ -29,15 +22,16 @@ const ColorTheme = ({ currentTheme }: { currentTheme: string | undefined }) => {
       title: "Dark Mode",
       description: "Select a sleek and modern dark theme",
     },
-    {
-      id: "system-theme",
-      value: "System",
-      imageSrc: "/images/icon-system-theme.svg",
-      title: "System",
-      description: "Adapts to your device’s theme",
-    },
+    // {
+    //   id: "system-theme",
+    //   value: "System",
+    //   imageSrc: "/images/icon-system-theme.svg",
+    //   title: "System",
+    //   description: "Adapts to your device’s theme",
+    // },
   ];
   const router = useRouter();
+
   async function onSubmit(formData: FormData) {
     const theme = formData.get("theme");
     await axios.patch("/api/settings", { theme });
@@ -58,34 +52,7 @@ const ColorTheme = ({ currentTheme }: { currentTheme: string | undefined }) => {
           name="theme"
         >
           {groups.map((item) => (
-            <FieldLabel htmlFor={item.id} key={item.id}>
-              <Field orientation="horizontal">
-                <FieldContent>
-                  <span className="bg-white dark:bg-neutral-950 min-w-10 h-10 rounded-xl flex justify-center items-center border border-neutral-200 dark:border-neutral-700">
-                    <Image
-                      src={item.imageSrc}
-                      alt=""
-                      width={24}
-                      height={24}
-                      className="dark:invert select-none"
-                    />
-                  </span>
-                  <div>
-                    <FieldTitle className="text-neutral-950 dark:text-white">
-                      {item.title}
-                    </FieldTitle>
-                    <FieldDescription className="text-neutral-700 text-xs lg:text-sm dark:text-neutral-400">
-                      {item.description}
-                    </FieldDescription>
-                  </div>
-                </FieldContent>
-                <RadioGroupItem
-                  value={item.value}
-                  id={item.id}
-                  className="self-center"
-                />
-              </Field>
-            </FieldLabel>
+            <RadioInput item={item} key={item.id} />
           ))}
         </RadioGroup>
         <Button variant="primary" size="xl" className="self-end">
