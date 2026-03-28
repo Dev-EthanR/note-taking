@@ -15,6 +15,7 @@ const Settings = async ({ searchParams }: Props) => {
   if (!session) return redirect("/auth/login");
 
   const tab = await searchParams;
+  const activeTab = tab.tab ?? redirect("/settings?tab=color-theme");
 
   const user = await prisma.settings.findUnique({
     where: {
@@ -27,7 +28,7 @@ const Settings = async ({ searchParams }: Props) => {
       <div
         className={clsx(
           "min-h-[calc(100vh-var(--navheader-height))] lg:border-r border-neutral-200 dark:border-neutral-800 pl-8 py-5 pr-4 w-full lg:w-70",
-          tab.tab && "hidden lg:block",
+          activeTab && "hidden lg:block",
         )}
       >
         <SettingsNav />
@@ -35,11 +36,13 @@ const Settings = async ({ searchParams }: Props) => {
       <div
         className={clsx(
           "py-6 px-4 w-full max-w-137.5",
-          !tab.tab && "hidden lg:block",
+          !activeTab && "hidden lg:block",
         )}
       >
-        {tab.tab === "color-theme" && <ColorTheme currentTheme={user?.theme} />}
-        {tab.tab === "font-theme" && <FontTheme currentFont={user?.font} />}
+        {activeTab === "color-theme" && (
+          <ColorTheme currentTheme={user?.theme} />
+        )}
+        {activeTab === "font-theme" && <FontTheme currentFont={user?.font} />}
       </div>
     </div>
   );

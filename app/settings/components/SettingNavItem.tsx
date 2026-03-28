@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
-import { NavLink } from "@/components/navbar/navlink";
 import clsx from "clsx";
+import { NavLink } from "@/utils/types/navLink";
 
 interface Props {
   linkItem: NavLink;

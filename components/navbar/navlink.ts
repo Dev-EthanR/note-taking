@@ -1,10 +1,4 @@
-export interface NavLink {
-  name: string;
-  href: string;
-  icon: string;
-  noBorder?: boolean;
-  desktopName?: string;
-}
+import { NavLink } from "@/utils/types/navLink";
 
 export const links: NavLink[] = [
   {
