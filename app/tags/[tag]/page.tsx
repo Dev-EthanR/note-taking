@@ -13,12 +13,12 @@ interface Props {
   params: { tag: string };
 }
 
-const page = async ({ params, searchParams }: Props) => {
-  const { tag } = await params;
+const TagPage = async ({ params, searchParams }: Props) => {
   const session = await auth();
-  const note = await searchParams;
-
   if (!session) redirect("/auth/login");
+
+  const { tag } = await params;
+  const note = await searchParams;
 
   const userNotes = await prisma.note.findMany({
     where: {
@@ -78,4 +78,4 @@ const page = async ({ params, searchParams }: Props) => {
   );
 };
 
-export default page;
+export default TagPage;

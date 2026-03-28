@@ -1,4 +1,3 @@
-// REFACTOR
 "use client";
 import { usePathname } from "next/navigation";
 import NavItem from "./NavItem";
@@ -8,6 +7,8 @@ import clsx from "clsx";
 
 const NavLinks = ({ tags }: { tags: string[] }) => {
   const pathname = usePathname();
+  const isTagsLinkActive = (href: string) =>
+    href === "/tags" ? pathname.startsWith("/tags") : pathname === href;
   return (
     <>
       <nav className="fixed bottom-0 w-full lg:hidden">
@@ -20,14 +21,7 @@ const NavLinks = ({ tags }: { tags: string[] }) => {
                 link.noBorder && "border-none",
               )}
             >
-              <NavItem
-                linkItem={link}
-                isActive={
-                  link.href === "/tags"
-                    ? pathname.startsWith("/tags")
-                    : pathname === link.href
-                }
-              />
+              <NavItem linkItem={link} isActive={isTagsLinkActive(link.href)} />
             </li>
           ))}
         </ul>
