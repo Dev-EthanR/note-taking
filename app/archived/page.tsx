@@ -35,7 +35,7 @@ async function Archive({ searchParams }: Props) {
       )}
     >
       <ClientNote
-        page="/archived"
+        page="archived"
         isNoteActive={note.note}
         userNotes={userNotes}
       />

@@ -1,27 +1,26 @@
-// REFACTOR
 "use client";
 import { Note } from "@/generated/prisma/client";
+import { PageType } from "@/utils/types/pageType";
 import clsx from "clsx";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useLayoutEffect, useState } from "react";
-import CreateNote from "./CreateNote";
-import CreateNoteButton from "./CreateNoteButton";
+import EmptyNotes from "./EmptyNotes";
+import NoteEditor from "./NoteEditor";
+import NoteListHeader from "./NoteListHeader";
 import PreviewNote from "./PreviewNote";
-import Link from "next/link";
 import { PreviewNoteLoading } from "./PreviewNoteLoading";
-import { CreateNoteLoading } from "./CreateNoteLoading";
 
 interface Props {
   isNoteActive?: string | undefined;
   userNotes: Note[];
-  page?: "/archived" | "/tags/" | "";
+  page?: PageType;
   tagSlug?: string;
 }
 
 const ClientNote = ({
   isNoteActive,
   userNotes,
-  page = "",
+  page = "home",
   tagSlug = "",
 }: Props) => {
   const [newTitle, setNewTitle] = useState("Untitled Note");
@@ -34,10 +33,16 @@ const ClientNote = ({
     const mediaQuery = window.matchMedia("(min-width: 1024px)");
     if (!mediaQuery.matches) return;
 
+    const pageUrls: Record<PageType, string> = {
+      home: "/",
+      archived: "/archived",
+      tags: `/tags/${tagSlug}`,
+    };
+
+    const url = pageUrls[page];
+
     if (!noteParam && userNotes[0]) {
-      router.replace(
-        `${page}${tagSlug}/?note=${userNotes[0].title}-${userNotes[0].id}`,
-      );
+      router.replace(`${url}/?note=${userNotes[0].title}-${userNotes[0].id}`);
     }
   }, []);
   useLayoutEffect(() => {
@@ -49,54 +54,9 @@ const ClientNote = ({
   if (userNotes.length < 1) {
     return (
       <>
-        <div
-          className="w-full lg:border-r lg:border-neutral-300 dark:lg:border-neutral-800
-         px-3 py-5 md:px-8 md:py-6 lg:pt-5 lg:pl-0 lg:pr-4 min-h-[calc(100vh-var(--navheader-height))] space-y-2 lg:w-fit lg:max-w-90"
-        >
-          <CreateNoteButton
-            style={isNoteActive ? "invisible lg:visible" : "visible"}
-          />
-          {!isNoteActive && page !== "/tags/" && (
-            <h1 className="text-neutral-950 dark:text-white text-2xl font-bold lg:hidden">
-              {page === "/archived" ? "Archived Notes" : "All Notes"}
-            </h1>
-          )}
-          {page === "/archived" && (
-            <p
-              className={clsx(
-                "text-sm w-full lg:max-w-60 text-neutral-700 dark:text-white",
-                isNoteActive ? "hidden lg:block" : "block",
-              )}
-            >
-              All your archived notes are stored here. You can restore or delete
-              them anytime.
-            </p>
-          )}
-          {!isNoteActive && (
-            <div className="p-2 space-y-2 border border-neutral-200 dark:border-neutral-800 rounded-md cursor-pointer w-full bg-neutral-100 dark:bg-neutral-800 lg:max-w-62.5">
-              {page === "/archived" ? (
-                <p className="text-sm text-neutral-950 dark:text-white">
-                  No notes have been archived yet. Move notes here for
-                  safekeeping, or{" "}
-                  <Link href="?note=create" className="underline">
-                    create a new note.
-                  </Link>
-                </p>
-              ) : (
-                <p className="text-sm text-neutral-950 dark:text-white">
-                  You don’t have any notes yet. Start a new note to capture your
-                  thoughts and ideas.
-                </p>
-              )}
-            </div>
-          )}
-        </div>
+        <EmptyNotes isNoteActive={isNoteActive} page={page} />
         {isNoteActive && (
-          <div className="pt-5 pr-6 md:pr-12 lg:px-6 lg:border-r lg:border-neutral-300 dark:lg:border-neutral-800 min-h-[calc(100vh-var(--navheader-height))] lg:w-137.5 grow">
-            <Suspense fallback={<CreateNoteLoading />}>
-              <CreateNote setTitle={setNewTitle} userNotes={userNotes} />
-            </Suspense>
-          </div>
+          <NoteEditor setNewTitle={setNewTitle} userNotes={userNotes} />
         )}
       </>
     );
@@ -104,42 +64,17 @@ const ClientNote = ({
   return (
     <>
       <div className="lg:border-r lg:border-neutral-300 px-3 py-5 md:px-8 md:py-6 lg:pt-5 lg:pl-0 lg:pr-4 min-h-[calc(100vh-var(--navheader-height))] space-y-2 lg:w-fit lg:max-w-90">
-        {!isNoteActive && page !== "/tags/" && (
-          <h1 className="text-neutral-950 text-2xl font-bold lg:hidden">
-            {page === "/archived" ? "Archived Notes" : "All Notes"}
-          </h1>
-        )}
-        <CreateNoteButton
-          style={isNoteActive ? "invisible lg:visible" : "visible"}
+        <NoteListHeader
+          page={page}
+          tagSlug={tagSlug}
+          isNoteActive={isNoteActive}
         />
-        {page === "/archived" && (
-          <p
-            className={clsx(
-              "text-sm w-full lg:max-w-60 text-neutral-700",
-              isNoteActive ? "hidden lg:block" : "block",
-            )}
-          >
-            All your archived notes are stored here. You can restore or delete
-            them anytime.
-          </p>
-        )}
-        {page === "/tags/" && (
-          <p
-            className={clsx(
-              "text-sm w-full lg:max-w-60 text-neutral-700",
-              isNoteActive ? "hidden lg:block" : "block",
-            )}
-          >
-            All notes with the ”{tagSlug}” tag are shown here.
-          </p>
-        )}
         <div
           className={clsx(
             "space-y-2 overflow-y-auto max-h-[calc(100vh-var(--navheader-height)-55px)] lg:max-h-[calc(100vh-var(--navheader-height)-100px)]",
             isNoteActive ? "hidden lg:block" : "block",
           )}
         >
-          {/* REFACTOR */}
           {noteParam === "create" && (
             <PreviewNote
               note={null}
@@ -163,11 +98,7 @@ const ClientNote = ({
         </div>
       </div>
       {isNoteActive && (
-        <div className="pt-5 pr-6 md:pr-12 lg:px-6 lg:border-r lg:border-neutral-300 min-h-[calc(100vh-var(--navheader-height))] lg:w-137.5 grow">
-          <Suspense fallback={<CreateNoteLoading />}>
-            <CreateNote setTitle={setNewTitle} userNotes={userNotes} />
-          </Suspense>
-        </div>
+        <NoteEditor setNewTitle={setNewTitle} userNotes={userNotes} />
       )}
     </>
   );

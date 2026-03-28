@@ -64,7 +64,7 @@ const TagPage = async ({ params, searchParams }: Props) => {
         )}
       >
         <ClientNote
-          page="/tags/"
+          page="tags"
           isNoteActive={note.note}
           userNotes={userNotes}
           tagSlug={tag}
