@@ -1,10 +1,7 @@
-// refactor
 "use client";
-import { Button } from "@/components/ui/button";
-import { RadioGroup } from "@/components/ui/radio-group";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import RadioInput from "./RadioInput";
+import SettingsCard from "./SettingsCard";
 
 const FontTheme = ({ currentFont }: { currentFont: string | undefined }) => {
   const groups = [
@@ -38,26 +35,13 @@ const FontTheme = ({ currentFont }: { currentFont: string | undefined }) => {
     router.refresh();
   }
   return (
-    <div>
-      <h2 className="text-neutral-950 font-bold dark:text-white">Font Theme</h2>
-      <p className="text-neutral-950 dark:text-neutral-300 mb-7">
-        Choose your font theme:
-      </p>
-      <form className="flex flex-col gap-4" action={onSubmit}>
-        <RadioGroup
-          defaultValue={currentFont || "Sans"}
-          className="w-full"
-          name="font"
-        >
-          {groups.map((item) => (
-            <RadioInput item={item} key={item.id} />
-          ))}
-        </RadioGroup>
-        <Button variant="primary" size="xl" className="self-end">
-          Apply Changes
-        </Button>
-      </form>
-    </div>
+    <SettingsCard
+      title={"Font Theme"}
+      description={"Choose your preferred font theme"}
+      groups={groups}
+      currentValue={{ currentValue: currentFont, fallback: "Sans" }}
+      onSubmit={onSubmit}
+    />
   );
 };
 

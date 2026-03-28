@@ -6,15 +6,8 @@ import {
   FieldTitle,
 } from "@/components/ui/field";
 import { RadioGroupItem } from "@/components/ui/radio-group";
+import { Item } from "@/utils/types/item";
 import Image from "next/image";
-
-interface Item {
-  id: string;
-  value: string;
-  imageSrc: string;
-  title: string;
-  description: string;
-}
 
 interface Props {
   item: Item;
