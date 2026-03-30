@@ -39,7 +39,7 @@ Users should be able to:
 
 ### Screenshot
 
-![Note-taking app screenshot](/screenshots/main.png)
+![Note-taking app screenshot](./screenshots/main.png)
 
 ### Links
 
