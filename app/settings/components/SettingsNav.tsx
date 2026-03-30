@@ -40,7 +40,7 @@ const SettingsNav = () => {
             showChevron={true}
           />
         ))}
-        <li className="lg:px-4 border-t pt-3 border-neutral-200 dark:border-neutral-800 w-full">
+        <li className="lg:px-4 border-t pt-3 border-neutral-200 dark:border-neutral-800 w-full cursor-pointer">
           <button
             onClick={() => signOut({ callbackUrl: "/" })}
             aria-label="Logout"

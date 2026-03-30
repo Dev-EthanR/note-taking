@@ -9,6 +9,7 @@ import { useForm } from "react-hook-form";
 import NoteMeta from "./NoteMeta";
 import NoteToolbar from "./NoteToolbar";
 import { NoteEditorData } from "@/utils/types/noteEditorData";
+import { CreateNoteLoading } from "./ui/CreateNoteLoading";
 
 interface Props {
   setTitle: (title: string) => void;
@@ -19,7 +20,7 @@ const CreateNote = ({ setTitle, userNotes }: Props) => {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const noteID = searchParams.get("note")?.split("-")[1];
-  const { noteData, setNoteData, loading } = useNote(noteID);
+  const { noteData, setNoteData } = useNote(noteID);
 
   const { handleSubmit, register, watch, reset } = useForm<NoteEditorData>();
 

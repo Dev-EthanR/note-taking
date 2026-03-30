@@ -5,6 +5,7 @@ import SettingsNav from "./components/SettingsNav";
 import ColorTheme from "./components/ColorTheme";
 import clsx from "clsx";
 import FontTheme from "./components/FontTheme";
+import ChangePassword from "./components/ChangePassword";
 
 interface Props {
   searchParams: Promise<{ tab?: string }>;
@@ -43,6 +44,7 @@ const Settings = async ({ searchParams }: Props) => {
           <ColorTheme currentTheme={user?.theme} />
         )}
         {activeTab === "font-theme" && <FontTheme currentFont={user?.font} />}
+        {activeTab === "change-password" && <ChangePassword />}
       </div>
     </div>
   );
