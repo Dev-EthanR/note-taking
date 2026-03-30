@@ -16,7 +16,7 @@ const Settings = async ({ searchParams }: Props) => {
   if (!session) return redirect("/auth/login");
 
   const tab = await searchParams;
-  const activeTab = tab.tab ?? redirect("/settings?tab=color-theme");
+  const activeTab = tab.tab ?? null;
 
   const user = await prisma.settings.findUnique({
     where: {
@@ -34,6 +34,7 @@ const Settings = async ({ searchParams }: Props) => {
       >
         <SettingsNav />
       </div>
+
       <div
         className={clsx(
           "py-6 px-4 w-full max-w-137.5",

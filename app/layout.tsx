@@ -47,7 +47,7 @@ export default async function RootLayout({
   return (
     <html lang="en" className={cn(geist.variable)}>
       <body
-        className={`${inter.variable} ${notoSerif.variable} ${sourceCodePro.variable} antialiased ${user?.theme === "Dark" && "dark"}`}
+        className={`${inter.variable} ${notoSerif.variable} ${sourceCodePro.variable} antialiased ${user?.theme === "Dark" && "dark"} dark:bg-neutral-950`}
       >
         <AppShell user={user} navbar={<Navbar />}>
           {children}
