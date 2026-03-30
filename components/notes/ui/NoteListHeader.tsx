@@ -1,7 +1,6 @@
 import { PageType } from "@/utils/types/pageType";
 import clsx from "clsx";
 import CreateNoteButton from "./CreateNoteButton";
-import { useSearchParams } from "next/navigation";
 
 interface Props {
   page: PageType;

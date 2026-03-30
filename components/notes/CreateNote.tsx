@@ -2,14 +2,13 @@
 "use client";
 import { Note as dbNote } from "@/generated/prisma/client";
 import { useNote } from "@/hooks/useNote";
+import { NoteEditorData } from "@/utils/types/noteEditorData";
 import axios from "axios";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import NoteMeta from "./NoteMeta";
 import NoteToolbar from "./NoteToolbar";
-import { NoteEditorData } from "@/utils/types/noteEditorData";
-import { CreateNoteLoading } from "./ui/CreateNoteLoading";
 
 interface Props {
   setTitle: (title: string) => void;

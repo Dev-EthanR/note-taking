@@ -1,6 +1,4 @@
-# Frontend Mentor - Note-taking web app solution
-
-This is a solution to the [Note-taking web app challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/note-taking-web-app-773r7bUfOG). Frontend Mentor challenges help you improve your coding skills by building realistic projects.
+Note-taking web app solution
 
 ## Table of contents
 
@@ -12,12 +10,10 @@ This is a solution to the [Note-taking web app challenge on Frontend Mentor](htt
   - [Built with](#built-with)
   - [What I learned](#what-i-learned)
   - [Continued development](#continued-development)
-  - [Useful resources](#useful-resources)
-  - [AI Collaboration](#ai-collaboration)
+- [AI Collaboration](#ai-collaboration)
 - [Author](#author)
-- [Acknowledgments](#acknowledgments)
 
-**Note: Delete this note and update the table of contents based on what sections you keep.**
+---
 
 ## Overview
 
@@ -25,113 +21,94 @@ This is a solution to the [Note-taking web app challenge on Frontend Mentor](htt
 
 Users should be able to:
 
-- Create, read, update, and delete notes
-- Archive notes
-- View all their notes
-- View all archived notes
-- View notes with specific tags
-- Search notes by title, tag, and content
-- Select their color theme
-- Select their font theme
-- Receive validation messages if required form fields aren't completed
-- Navigate the whole app and perform all actions using only their keyboard
-- View the optimal layout for the interface depending on their device's screen size
-- See hover and focus states for all interactive elements on the page
-- **Bonus**: Save details to a database (build the project as a full-stack app)
-- **Bonus**: Create an account, log in, change password (add user authentication to the full-stack app)
-- **Bonus**: Reset their password (add password reset to the full-stack app)
+- ✅ Create, read, update, and delete notes
+- ✅ Archive notes
+- ✅ View all their notes
+- ✅ View all archived notes
+- ✅ View notes with specific tags
+- ✅ Search notes by title, tag, and content
+- ✅ Select their color theme
+- ✅ Select their font theme
+- ✅ Receive validation messages if required form fields aren't completed
+- ✅ Navigate the whole app and perform all actions using only their keyboard
+- ✅ View the optimal layout depending on their device's screen size
+- ✅ See hover and focus states for all interactive elements
+- ✅ **Bonus**: Save details to a database (full-stack app)
+- ✅ **Bonus**: Create an account, log in, change password (authentication)
+- ❌ **Bonus**: Reset their password (forgot password flow)
 
 ### Screenshot
 
-![](./screenshot.jpg)
-
-Add a screenshot of your solution. The easiest way to do this is to use Firefox to view your project, right-click the page and select "Take a Screenshot". You can choose either a full-height screenshot or a cropped one based on how long the page is. If it's very long, it might be best to crop it.
-
-Alternatively, you can use a tool like [FireShot](https://getfireshot.com/) to take the screenshot. FireShot has a free option, so you don't need to purchase it.
-
-Then crop/optimize/edit your image however you like, add it to your project, and update the file path in the image above.
-
-**Note: Delete this note and the paragraphs above when you add your screenshot. If you prefer not to add a screenshot, feel free to remove this entire section.**
+![Note-taking app screenshot](/screenshots/main.png)
 
 ### Links
 
-- Solution URL: [Add solution URL here](https://your-solution-url.com)
-- Live Site URL: [Add live site URL here](https://your-live-site-url.com)
+- Live Site: [note-taking-nine-blond.vercel.app](https://note-taking-nine-blond.vercel.app)
+- GitHub: [github.com/Dev-EthanR/note-taking](https://github.com/Dev-EthanR/note-taking)
+
+---
 
 ## My process
 
 ### Built with
 
-- Semantic HTML5 markup
-- CSS custom properties
-- Flexbox
-- CSS Grid
-- Mobile-first workflow
-- [React](https://reactjs.org/) - JS library
-- [Next.js](https://nextjs.org/) - React framework
-- [Styled Components](https://styled-components.com/) - For styles
-
-**Note: These are just examples. Delete this note and replace the list above with your own choices**
+- **Framework**: Next.js 16 (App Router), TypeScript
+- **Styling**: Tailwind CSS v4, shadcn/ui, clsx
+- **Forms**: React Hook Form, Zod
+- **Auth**: Auth.js v5 — credentials (email/password) + Google OAuth, bcrypt, JWT sessions
+- **Database**: PostgreSQL (Neon serverless), Prisma ORM
+- **State**: URL as source of truth, React state for local UI
+- **Deployment**: Vercel
 
 ### What I learned
 
-Use this section to recap over some of your major learnings while working through this project. Writing these out and providing code samples of areas you want to highlight is a great way to reinforce your own knowledge.
+**Credentials auth end to end** — building a full credentials auth flow from scratch using Auth.js v5, bcrypt password hashing, and JWT session callbacks was the most significant new skill from this project. Understanding the difference between OAuth (where the provider handles identity) and credentials (where you own the full flow — hashing on register, comparing on login, putting the database ID on the session) gave me a much clearer mental model of how auth actually works.
 
-To see how you can add code snippets, see below:
+**Prisma UPSERT** — using `upsert` to handle create-or-update in a single DB operation, particularly for the settings model where a user may or may not have existing settings. Cleaner than a find-then-create pattern.
 
-```html
-<h1>Some HTML code I'm proud of</h1>
-```
+**`useLayoutEffect` over `useEffect` for visual sync** — discovered that `useEffect` causes a visible flash when syncing state that affects what's rendered. Using `useLayoutEffect` runs synchronously after DOM mutations but before the browser paints, eliminating the flicker entirely when updating the active note title in the preview list.
 
-```css
-.proud-of-this-css {
-  color: papayawhip;
-}
-```
+**Debounce as a custom hook** — extracted debouncing logic into a `useDebounce` hook that can be reused across the app. Understanding when to reach for a custom hook — when `useState` and `useEffect` combine to do one specific, reusable thing — was a key architectural lesson.
 
-```js
-const proudOfThisFunc = () => {
-  console.log("🎉");
-};
-```
+**Zod `.refine()`** — using Zod's `refine` method for cross-field validation (confirming passwords match, new password differs from old) rather than handling it manually in submit logic.
 
-If you want more help with writing markdown, we'd recommend checking out [The Markdown Guide](https://www.markdownguide.org/) to learn more.
+**`clsx` for conditional classes** — using `clsx` to manage conditional Tailwind class logic cleanly, avoiding messy template literal strings for dynamic styling.
 
-**Note: Delete this note and the content within this section and replace with your own learnings.**
+**shadcn/ui customisation pattern** — the correct approach is to leave shadcn source files untouched for structural changes and customise via `className` props, but editing the source directly is fine and expected when adding new variants via `cva`.
+
+**URL as single source of truth** — an early bug had both `activeId` state and the URL tracking which note was open, causing them to conflict. The fix was eliminating the state entirely and deriving everything from `useSearchParams`. One source of truth eliminates an entire class of bugs.
 
 ### Continued development
 
-Use this section to outline areas that you want to continue focusing on in future projects. These could be concepts you're still not completely comfortable with or techniques you found useful that you want to refine and perfect.
+- **Auto-save with debounce** — Notion-style saving that fires after the user stops typing, with optimistic UI and a "saving..." indicator
+- **Note version history** — append-only snapshots on each save so users can restore previous versions
+- **Forgot password flow** — email-based password reset using Resend
+- **Performance** — PostgreSQL full-text search with `tsvector` and GIN indexes instead of basic `contains` queries
+- **Keyboard navigation** — full keyboard accessibility for all note actions
 
-**Note: Delete this note and the content within this section and replace with your own plans for continued development.**
+---
 
-### Useful resources
+## AI Collaboration
 
-- [Example resource 1](https://www.example.com) - This helped me for XYZ reason. I really liked this pattern and will use it going forward.
-- [Example resource 2](https://www.example.com) - This is an amazing article which helped me finally understand XYZ. I'd recommend it to anyone still learning this concept.
+This project was built with Claude (Anthropic) used throughout as a senior development collaborator — not for generating code, but for architectural discussion, code review, and debugging.
 
-**Note: Delete this note and replace the list above with resources that helped you during the challenge. These could come in handy for anyone viewing your solution or for yourself when you look back on this project in the future.**
+**How it was used:**
 
-### AI Collaboration
+- **Architecture decisions** — discussing trade-offs before writing code (JWT vs database sessions, server components vs client components, URL as source of truth vs local state)
+- **Code review** — regular reviews of components and API routes with feedback on edge cases, security issues, and refactoring opportunities
+- **Debugging** — working through specific errors together, understanding root causes rather than just applying fixes
+- **Refactoring guidance** — identifying when components were doing too much and planning extractions (custom hooks, smaller components, shared utilities)
 
-Describe how you used AI tools (if any) during this project. This helps demonstrate your ability to work effectively with AI assistants.
+**What worked well:**
 
-- What tools did you use (e.g., ChatGPT, Claude, GitHub Copilot)?
-- How did you use them (e.g., debugging, generating boilerplate, brainstorming solutions)?
-- What worked well? What didn't?
+Using Claude as a sounding board rather than a code generator meant the decisions were understood, not just copied. When bugs appeared (like the `activeId` state vs URL conflict), the debugging process built genuine intuition rather than just fixing the symptom.
 
-**Note: Delete this note and the content above if you didn't use AI, or replace with your own experience.**
+**What didn't work:**
+
+Early on, reaching for state too quickly before checking if the data already existed elsewhere (in the URL, in props). This is a habit being actively corrected.
+
+---
 
 ## Author
 
-- Website - [Add your name here](https://www.your-site.com)
-- Frontend Mentor - [@yourusername](https://www.frontendmentor.io/profile/yourusername)
-- Twitter - [@yourusername](https://www.twitter.com/yourusername)
-
-**Note: Delete this note and add/remove/edit lines above based on what links you'd like to share.**
-
-## Acknowledgments
-
-This is where you can give a hat tip to anyone who helped you out on this project. Perhaps you worked in a team or got some inspiration from someone else's solution. This is the perfect place to give them some credit.
-
-**Note: Delete this note and edit this section's content as necessary. If you completed this challenge by yourself, feel free to delete this section entirely.**
+- GitHub: [@Dev-EthanR](https://github.com/Dev-EthanR)
