@@ -1,6 +1,6 @@
-import ArchiveNote from "@/components/notes/ArchiveNote";
+import ArchiveNote from "@/components/notes/actions/ArchiveNote";
 import ClientNote from "@/components/notes/ClientNote";
-import DeleteNote from "@/components/notes/DeleteNote";
+import DeleteNote from "@/components/notes/actions/DeleteNote";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import clsx from "clsx";

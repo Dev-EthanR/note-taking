@@ -1,6 +1,6 @@
 import { Note } from "@/generated/prisma/client";
 import { UseFormRegister } from "react-hook-form";
-import CreateNoteHeader from "./CreateNoteHeader";
+import CreateNoteHeader from "./ui/CreateNoteHeader";
 import { NoteEditorData } from "@/utils/types/noteEditorData";
 
 interface Props {

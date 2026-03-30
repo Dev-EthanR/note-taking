@@ -1,9 +1,9 @@
 "use client";
 import { Note } from "@/generated/prisma/client";
-import NoteAction from "./NoteAction";
 import axios from "axios";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
+import NoteAction from "./NoteAction";
 
 interface Props {
   userNotes: Note[];

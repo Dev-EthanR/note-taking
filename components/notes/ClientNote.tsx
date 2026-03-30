@@ -4,11 +4,11 @@ import { PageType } from "@/utils/types/pageType";
 import clsx from "clsx";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useLayoutEffect, useState } from "react";
-import EmptyNotes from "./EmptyNotes";
 import NoteEditor from "./NoteEditor";
-import NoteListHeader from "./NoteListHeader";
-import PreviewNote from "./PreviewNote";
-import { PreviewNoteLoading } from "./PreviewNoteLoading";
+import PreviewNote from "./ui/PreviewNote";
+import { PreviewNoteLoading } from "./ui/PreviewNoteLoading";
+import EmptyNotes from "./ui/EmptyNotes";
+import NoteListHeader from "./ui/NoteListHeader";
 
 interface Props {
   isNoteActive?: string | undefined;

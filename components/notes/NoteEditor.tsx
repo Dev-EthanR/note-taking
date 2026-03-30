@@ -1,7 +1,7 @@
 import { Note } from "@/generated/prisma/client";
 import { SetStateAction, Suspense } from "react";
 import CreateNote from "./CreateNote";
-import { CreateNoteLoading } from "./CreateNoteLoading";
+import { CreateNoteLoading } from "./ui/CreateNoteLoading";
 
 const NoteEditor = ({
   setNewTitle,

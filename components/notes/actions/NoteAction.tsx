@@ -2,7 +2,6 @@
 import clsx from "clsx";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
-import { Button } from "../ui/button";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -14,7 +13,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { title } from "process";
+import { Button } from "@/components/ui/button";
 
 interface Props {
   name: string;

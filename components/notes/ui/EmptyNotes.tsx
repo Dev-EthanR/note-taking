@@ -1,7 +1,7 @@
 import Link from "next/link";
-import CreateNoteButton from "./CreateNoteButton";
 import clsx from "clsx";
 import { PageType } from "@/utils/types/pageType";
+import CreateNoteButton from "./CreateNoteButton";
 
 interface Props {
   isNoteActive?: string;

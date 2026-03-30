@@ -23,7 +23,7 @@ import {
   InputGroupInput,
 } from "../ui/input-group";
 import AuthCardHeader from "./AuthCardHeader";
-import { register as signUp } from "./register";
+import { register as signUp } from "../../lib/actions/register";
 import { signIn } from "next-auth/react";
 
 type FormData = z.infer<typeof signUpSchema>;

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Button } from "../ui/button";
-import ArchiveNote from "./ArchiveNote";
-import DeleteNote from "./DeleteNote";
+import ArchiveNote from "./actions/ArchiveNote";
+import DeleteNote from "./actions/DeleteNote";
 import Image from "next/image";
 import { Note } from "@/generated/prisma/client";
 
