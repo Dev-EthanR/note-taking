@@ -7,36 +7,62 @@ import clsx from "clsx";
 import { redirect } from "next/navigation";
 
 interface Props {
-  searchParams: Promise<{ note?: string }>;
+  searchParams: Promise<{ note?: string; search?: string }>;
 }
 
 export default async function Home({ searchParams }: Props) {
   const session = await auth();
-  const note = await searchParams;
+  const param = await searchParams;
   if (!session) redirect("/auth/login");
 
-  const userNotes = await prisma.note.findMany({
-    where: {
-      userId: session.user?.id,
-      status: null,
-    },
+  const notes = param.search
+    ? await prisma.note.findMany({
+        where: {
+          userId: session.user?.id,
+          OR: [
+            {
+              title: {
+                contains: param.search,
+                mode: "insensitive",
+              },
+            },
+            {
+              content: {
+                contains: param.search,
+                mode: "insensitive",
+              },
+            },
+            {
+              tags: {
+                hasSome: [param.search],
+              },
+            },
+          ],
+        },
+      })
+    : await prisma.note.findMany({
+        where: {
+          userId: session.user?.id,
+          status: null,
+        },
 
-    orderBy: {
-      updatedAt: "desc",
-    },
-  });
+        orderBy: {
+          updatedAt: "desc",
+        },
+      });
+
   return (
     <div
       className={clsx(
         "lg:pl-5 lg:flex flex-1  fill-to-height pr-5",
-        note.note && "flex ",
+        param.note && "flex ",
       )}
     >
-      <ClientNote isNoteActive={note.note} userNotes={userNotes} />
-      <div className={userNotes.length < 1 ? "invisible" : ""}>
+      <ClientNote isNoteActive={param.note} userNotes={notes} />
+      <div className={notes.length < 1 ? "invisible" : ""}>
         <div className="hidden lg:block pl-4 py-5 space-y-3">
-          <ArchiveNote userNotes={userNotes} archive={true} />
-          <DeleteNote userNotes={userNotes} />
+          <ArchiveNote userNotes={notes} archive={true} />
+          <DeleteNote userNotes={notes} />
         </div>
       </div>
     </div>

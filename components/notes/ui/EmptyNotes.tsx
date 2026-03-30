@@ -2,6 +2,7 @@ import Link from "next/link";
 import clsx from "clsx";
 import { PageType } from "@/utils/types/pageType";
 import CreateNoteButton from "./CreateNoteButton";
+import { title } from "process";
 
 interface Props {
   isNoteActive?: string;
@@ -37,6 +38,16 @@ const pageConfig = {
       </p>
     ),
   },
+  search: {
+    title: null,
+    description: null,
+    emptyMessage: (
+      <p className="text-sm text-neutral-950 dark:text-white">
+        No notes found matching your search. Try adjusting your search terms or
+        filters to find what you're looking for.
+      </p>
+    ),
+  },
 };
 
 const EmptyNotes = ({ isNoteActive, page = "home" }: Props) => {
@@ -65,7 +76,7 @@ const EmptyNotes = ({ isNoteActive, page = "home" }: Props) => {
         </p>
       )}
 
-      {!isNoteActive && (
+      {!isNoteActive && page !== "search" && (
         <div className="p-2 space-y-2 border border-neutral-200 dark:border-neutral-800 rounded-md w-full bg-neutral-100 dark:bg-neutral-800 lg:max-w-62.5">
           <p className="text-sm text-neutral-950 dark:text-white">
             No notes with this tag yet.

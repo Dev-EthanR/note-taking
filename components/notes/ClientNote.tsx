@@ -28,23 +28,29 @@ const ClientNote = ({
   const noteParam = searchParams.get("note");
   const activeId = noteParam?.split("-")[1];
   const router = useRouter();
-
   useEffect(() => {
-    const mediaQuery = window.matchMedia("(min-width: 1024px)");
-    if (!mediaQuery.matches) return;
+    const isDesktop = window.matchMedia("(min-width: 1024px)").matches;
+    if (!isDesktop) return;
+
+    if (noteParam || userNotes.length === 0) return;
 
     const pageUrls: Record<PageType, string> = {
-      home: "/",
+      home: "",
       archived: "/archived",
       tags: `/tags/${tagSlug}`,
+      search: "/search",
     };
 
-    const url = pageUrls[page];
+    const baseUrl = pageUrls[page];
+    const first = userNotes[0];
+    const slug = `${first.title}-${first.id}`;
 
-    if (!noteParam && userNotes[0]) {
-      router.replace(`${url}/?note=${userNotes[0].title}-${userNotes[0].id}`);
-    }
-  }, []);
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("note", slug);
+
+    router.replace(`${baseUrl}?${params.toString()}`);
+  }, [noteParam, userNotes, page, tagSlug, router, searchParams]);
+
   useLayoutEffect(() => {
     const activeNote = userNotes.find((n) => n.id === activeId);
     if (activeNote) {
@@ -63,7 +69,12 @@ const ClientNote = ({
   }
   return (
     <>
-      <div className="lg:border-r lg:border-neutral-300 px-3 py-5 md:px-8 md:py-6 lg:pt-5 lg:pl-0 lg:pr-4 min-h-[calc(100vh-var(--navheader-height))] space-y-2 lg:w-fit lg:max-w-90">
+      <div
+        className={clsx(
+          "lg:border-r lg:border-neutral-300 px-3 py-5 md:px-8 md:py-6 lg:pt-5 lg:pl-0 lg:pr-4 min-h-[calc(100vh-var(--navheader-height))] space-y-2 lg:w-fit lg:max-w-90",
+          page === "search" && isNoteActive && "hidden lg:block",
+        )}
+      >
         <NoteListHeader
           page={page}
           tagSlug={tagSlug}

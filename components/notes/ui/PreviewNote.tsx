@@ -1,7 +1,7 @@
 import { Note } from "@/generated/prisma/client";
 import { checkString } from "@/utils/checkString";
 import clsx from "clsx";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 interface Props {
   note: Note | null;
@@ -20,6 +20,7 @@ const PreviewNote = ({
 }: Props) => {
   const router = useRouter();
   const isActive = isNew ? noteParam === "create" : activeId === note?.id;
+  const searchParams = useSearchParams();
 
   const formattedDate = note?.updatedAt
     ? new Date(note.updatedAt).toLocaleDateString("en-GB", {
@@ -31,7 +32,11 @@ const PreviewNote = ({
 
   const handleClick = () => {
     if (isNew) return;
-    router.push(`?note=${note?.title}-${note?.id}`);
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("note", `${note?.title}-${note?.id}`);
+
+    router.push(`?${params.toString()}`);
+    router.refresh();
   };
 
   const title = isActive ? (updatedTitle ?? note?.title) : note?.title;
