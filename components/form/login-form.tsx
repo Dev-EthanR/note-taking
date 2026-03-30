@@ -95,12 +95,12 @@ export function LoginForm({
                   <FieldLabel htmlFor="password" className="dark:text-white">
                     Password
                   </FieldLabel>
-                  <Link
+                  {/* <Link
                     href="#"
                     className="ml-auto inline-block  underline-offset-3 underline text-neutral-600 text-[12px] hover:text-primary-500 dark:text-neutral-400 outline-none"
                   >
                     Forgot
-                  </Link>
+                  </Link> */}
                 </div>
                 <InputGroup>
                   <InputGroupInput

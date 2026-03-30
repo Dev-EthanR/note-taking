@@ -85,6 +85,7 @@ Users should be able to:
 - **Forgot password flow** — email-based password reset using Resend
 - **Performance** — PostgreSQL full-text search with `tsvector` and GIN indexes instead of basic `contains` queries
 - **Keyboard navigation** — full keyboard accessibility for all note actions
+- **WYSIWYG editor** - text formatting for the notes
 
 ---
 
